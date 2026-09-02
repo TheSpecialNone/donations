@@ -84,17 +84,32 @@
   .hero {
     background: var(--panel);
     border: 4px solid var(--line);
-    box-shadow: 0 0 0 3px var(--gold-dark), 8px 8px 0 0 #000, 0 0 40px -10px var(--gold);
     padding: 36px 30px;
     margin-bottom: 8px;
     text-align: center;
     position: relative;
+    isolation: isolate;
+    filter: drop-shadow(8px 8px 0 #000) drop-shadow(0 0 16px rgba(244,185,66,0.4));
     animation: hero-glow 3.5s ease-in-out infinite;
   }
 
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    background: var(--gold-dark);
+    clip-path: polygon(
+      0 8px, 8px 8px, 8px 0,
+      calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,
+      8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)
+    );
+    z-index: -1;
+  }
+
   @keyframes hero-glow {
-    0%, 100% { box-shadow: 0 0 0 3px var(--gold-dark), 8px 8px 0 0 #000, 0 0 30px -8px var(--gold); }
-    50% { box-shadow: 0 0 0 3px var(--gold), 8px 8px 0 0 #000, 0 0 55px -4px var(--gold); }
+    0%, 100% { filter: drop-shadow(8px 8px 0 #000) drop-shadow(0 0 14px rgba(244,185,66,0.35)); }
+    50% { filter: drop-shadow(8px 8px 0 #000) drop-shadow(0 0 32px rgba(244,185,66,0.65)); }
   }
 
   .hero .marquee {
@@ -148,21 +163,30 @@
     padding: 10px 18px;
     min-width: 130px;
     position: relative;
-    overflow: hidden;
+    isolation: isolate;
   }
 
-  .stat-box::after {
+  .stat-box::before {
     content: "";
     position: absolute;
-    top: 0; left: -60%;
-    width: 40%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(244,185,66,0.25), transparent);
-    animation: sweep 3s ease-in-out infinite;
+    inset: -4px;
+    background: var(--gold-dark);
+    clip-path: polygon(
+      0 6px, 6px 6px, 6px 0,
+      calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
+      100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%,
+      6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px)
+    );
+    z-index: -1;
   }
 
-  @keyframes sweep {
-    0% { left: -60%; }
-    100% { left: 130%; }
+  .stat-box .val {
+    animation: led-pulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes led-pulse {
+    0%, 100% { text-shadow: 0 0 6px currentColor; }
+    50% { text-shadow: 0 0 16px currentColor, 0 0 4px #fff; }
   }
 
   .stat-box .val {
@@ -454,6 +478,116 @@
 
   .tracker-goal .goal-val { color: var(--gold); }
 
+  /* ---------- MUSIC PLAYER ---------- */
+  #music-player {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    z-index: 50;
+    background: var(--panel);
+    border: 3px solid var(--line);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 260px;
+    isolation: isolate;
+    box-shadow: 4px 4px 0 0 #000;
+  }
+
+  #music-player::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    background: var(--green);
+    clip-path: polygon(
+      0 6px, 6px 6px, 6px 0,
+      calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
+      100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%,
+      6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px)
+    );
+    z-index: -1;
+  }
+
+  #music-toggle, #music-mute {
+    background: #000;
+    border: 2px solid var(--line);
+    color: var(--gold);
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #music-toggle:hover, #music-mute:hover { background: var(--panel-light); }
+
+  #music-toggle svg, #music-mute svg { width: 14px; height: 14px; }
+
+  .music-info {
+    overflow: hidden;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .music-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .music-dot {
+    width: 6px;
+    height: 6px;
+    background: #444;
+    border-radius: 50%;
+  }
+
+  .music-dot.live {
+    background: var(--green);
+    box-shadow: 0 0 6px 1px var(--green);
+    animation: dot-blink 1.1s steps(2) infinite;
+  }
+
+  @keyframes dot-blink {
+    50% { opacity: 0.2; }
+  }
+
+  .music-title-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  .music-title {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text);
+    padding-left: 0;
+  }
+
+  .music-title.scroll {
+    animation: ticker 9s linear infinite;
+    padding-left: 100%;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+
+  @media (max-width: 560px) {
+    #music-player { max-width: 200px; padding: 10px 12px; }
+  }
+
   footer {
     margin-top: 72px;
     font-size: 0.75rem;
@@ -474,11 +608,28 @@
 
 <div id="particles"></div>
 
+<div id="music-player">
+  <button id="music-toggle" aria-label="Play music">
+    <svg viewBox="0 0 24 24" fill="currentColor" id="music-toggle-icon"><path d="M8 5v14l11-7z"/></svg>
+  </button>
+  <div class="music-info">
+    <div class="music-label"><span class="music-dot" id="music-dot"></span> BACKGROUND TRACK</div>
+    <div class="music-title-wrap">
+      <span class="music-title" id="music-title">Loading track…</span>
+    </div>
+  </div>
+  <button id="music-mute" aria-label="Mute">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+  </button>
+</div>
+
+<div id="yt-audio" style="position:fixed; width:1px; height:1px; opacity:0; pointer-events:none; bottom:0; right:0;"></div>
+
 <div class="wrap">
 
   <!-- HERO -->
   <div class="hero pixel">
-    <div class="marquee">★ SUPPORT ME ★</div>
+    <div class="marquee">★ ROBLOX CREATOR SHOP ★</div>
     <h1>SPVCTA</h1>
     <p>Pick and purchase a gamepass, big or small, to support my cause. Any amount donated is very appreciated!</p>
     <div class="hero-stats">
@@ -652,6 +803,88 @@
 
   updateTracker();
   spawnParticles();
+
+  // ==========================================================
+  // BACKGROUND MUSIC PLAYER — change the video ID to swap tracks
+  // ==========================================================
+  const YT_VIDEO_ID = "URtsmOwjVLw";
+  // ==========================================================
+
+  let ytPlayer;
+  let isPlaying = false;
+  let isMuted = false;
+
+  const toggleBtn = document.getElementById("music-toggle");
+  const toggleIcon = document.getElementById("music-toggle-icon");
+  const muteBtn = document.getElementById("music-mute");
+  const dot = document.getElementById("music-dot");
+  const titleEl = document.getElementById("music-title");
+
+  const ICON_PLAY = '<path d="M8 5v14l11-7z"/>';
+  const ICON_PAUSE = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+
+  function loadYT() {
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+  }
+
+  window.onYouTubeIframeAPIReady = function () {
+    ytPlayer = new YT.Player("yt-audio", {
+      height: "1",
+      width: "1",
+      videoId: YT_VIDEO_ID,
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        loop: 1,
+        playlist: YT_VIDEO_ID,
+        modestbranding: 1
+      },
+      events: {
+        onReady: function () {
+          titleEl.textContent = "Tap play to listen";
+        }
+      }
+    });
+  };
+
+  toggleBtn.addEventListener("click", function () {
+    if (!ytPlayer) return;
+    if (isPlaying) {
+      ytPlayer.pauseVideo();
+      isPlaying = false;
+      toggleIcon.innerHTML = ICON_PLAY;
+      dot.classList.remove("live");
+    } else {
+      ytPlayer.playVideo();
+      isPlaying = true;
+      toggleIcon.innerHTML = ICON_PAUSE;
+      dot.classList.add("live");
+    }
+  });
+
+  muteBtn.addEventListener("click", function () {
+    if (!ytPlayer) return;
+    isMuted = !isMuted;
+    if (isMuted) ytPlayer.mute(); else ytPlayer.unMute();
+    muteBtn.style.opacity = isMuted ? 0.4 : 1;
+  });
+
+  // Pull the real video title via YouTube's oEmbed endpoint
+  fetch("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=" + YT_VIDEO_ID + "&format=json")
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data && data.title) {
+        titleEl.textContent = data.title;
+        if (data.title.length > 26) titleEl.classList.add("scroll");
+      }
+    })
+    .catch(function () {
+      titleEl.textContent = "Tap play to listen";
+    });
+
+  loadYT();
 </script>
 
 </body>
