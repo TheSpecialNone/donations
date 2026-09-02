@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>donations</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%230c0c0f'/%3E%3Cpath d='M12 2l9 5v10l-9 5-9-5V7l9-5z' fill='none' stroke='%23f4b942' stroke-width='2'/%3E%3Cpath d='M12 2v20M3 7l9 5 9-5' fill='none' stroke='%23f4b942' stroke-width='1.4'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l9 5v10l-9 5-9-5V7l9-5z' fill='none' stroke='%23f4b942' stroke-width='2.2'/%3E%3Cpath d='M12 2v20M3 7l9 5 9-5' fill='none' stroke='%23f4b942' stroke-width='1.6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -82,34 +82,12 @@
 
   /* ---------- HERO ---------- */
   .hero {
-    background: var(--panel);
+    background: transparent;
     border: 4px solid var(--line);
     padding: 36px 30px;
     margin-bottom: 8px;
     text-align: center;
     position: relative;
-    isolation: isolate;
-    filter: drop-shadow(8px 8px 0 #000) drop-shadow(0 0 16px rgba(244,185,66,0.4));
-    animation: hero-glow 3.5s ease-in-out infinite;
-  }
-
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: -6px;
-    background: var(--gold-dark);
-    clip-path: polygon(
-      0 8px, 8px 8px, 8px 0,
-      calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
-      100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,
-      8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)
-    );
-    z-index: -1;
-  }
-
-  @keyframes hero-glow {
-    0%, 100% { filter: drop-shadow(8px 8px 0 #000) drop-shadow(0 0 14px rgba(244,185,66,0.35)); }
-    50% { filter: drop-shadow(8px 8px 0 #000) drop-shadow(0 0 32px rgba(244,185,66,0.65)); }
   }
 
   .hero .marquee {
@@ -130,7 +108,7 @@
     font-family: 'Press Start 2P', monospace;
     font-size: 2.4rem;
     color: #fff;
-    text-shadow: 4px 4px 0 var(--red), 8px 8px 0 rgba(0,0,0,0.4);
+    text-shadow: 4px 4px 0 var(--gold-dark), 8px 8px 0 rgba(0,0,0,0.4);
     letter-spacing: 0.04em;
     margin-bottom: 22px;
     display: inline-block;
@@ -158,26 +136,17 @@
   }
 
   .stat-box {
-    background: #000;
-    border: 3px solid var(--line);
+    background: rgba(0,0,0,0.5);
+    border: 3px solid var(--gold-dark);
     padding: 10px 18px;
     min-width: 130px;
     position: relative;
-    isolation: isolate;
-  }
-
-  .stat-box::before {
-    content: "";
-    position: absolute;
-    inset: -4px;
-    background: var(--gold-dark);
     clip-path: polygon(
       0 6px, 6px 6px, 6px 0,
       calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
       100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%,
       6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px)
     );
-    z-index: -1;
   }
 
   .stat-box .val {
@@ -484,32 +453,18 @@
     bottom: 18px;
     right: 18px;
     z-index: 50;
-    background: var(--panel);
-    border: 3px solid var(--line);
+    background: transparent;
+    border: 3px solid var(--green);
     padding: 12px 14px;
     display: flex;
     align-items: center;
     gap: 12px;
     max-width: 260px;
-    isolation: isolate;
-    box-shadow: 4px 4px 0 0 #000;
+    box-shadow: 4px 4px 0 0 #000, 0 0 0 3px var(--line);
   }
 
-  #music-player::before {
-    content: "";
-    position: absolute;
-    inset: -4px;
-    background: var(--green);
-    clip-path: polygon(
-      0 6px, 6px 6px, 6px 0,
-      calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
-      100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%,
-      6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px)
-    );
-    z-index: -1;
-  }
-
-  #music-toggle, #music-mute {
+  .music-btn {
+    position: relative;
     background: #000;
     border: 2px solid var(--line);
     color: var(--gold);
@@ -520,11 +475,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    clip-path: polygon(
+      0 6px, 6px 6px, 6px 0,
+      calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
+      100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%,
+      6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px)
+    );
+    transition: transform 0.1s ease;
   }
 
-  #music-toggle:hover, #music-mute:hover { background: var(--panel-light); }
+  .music-btn:hover { background: var(--panel-light); transform: translate(-1px, -1px); }
+  .music-btn:active { transform: translate(0, 0); }
 
-  #music-toggle svg, #music-mute svg { width: 14px; height: 14px; }
+  .music-btn svg { width: 14px; height: 14px; }
 
   .music-info {
     overflow: hidden;
@@ -609,7 +572,7 @@
 <div id="particles"></div>
 
 <div id="music-player">
-  <button id="music-toggle" aria-label="Play music">
+  <button id="music-toggle" class="music-btn" aria-label="Play music">
     <svg viewBox="0 0 24 24" fill="currentColor" id="music-toggle-icon"><path d="M8 5v14l11-7z"/></svg>
   </button>
   <div class="music-info">
@@ -618,7 +581,7 @@
       <span class="music-title" id="music-title">Loading track…</span>
     </div>
   </div>
-  <button id="music-mute" aria-label="Mute">
+  <button id="music-mute" class="music-btn" aria-label="Mute">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
   </button>
 </div>
@@ -627,9 +590,8 @@
 
 <div class="wrap">
 
-  <!-- HERO -->
   <div class="hero pixel">
-    <div class="marquee">★ ROBLOX CREATOR SHOP ★</div>
+    <div class="marquee">★ SUPPORT ME ★</div>
     <h1>SPVCTA</h1>
     <p>Pick and purchase a gamepass, big or small, to support my cause. Any amount donated is very appreciated!</p>
     <div class="hero-stats">
@@ -644,7 +606,6 @@
     </div>
   </div>
 
-  <!-- ROBUX TRACKER -->
   <div class="section-label">
     <span class="tag">GOAL TRACKER</span>
     <div class="rule"></div>
@@ -664,7 +625,6 @@
     </div>
   </div>
 
-  <!-- SHOP -->
   <div class="section-label">
     <span class="tag">ITEM SHOP</span>
     <div class="rule"></div>
@@ -754,7 +714,6 @@
 
   </div>
 
-  <!-- PROFILE -->
   <a class="profile-btn pixel" href="https://www.roblox.com/users/902603595/profile" target="_blank" rel="noopener">
     MY ROBLOX PROFILE
   </a>
@@ -766,12 +725,8 @@
 </div>
 
 <script>
-  // ==========================================================
-  // ROBUX TRACKER — edit these two numbers any time you like
-  // ==========================================================
   const ROBUX_RAISED = 1153;
   const ROBUX_GOAL = 24800;
-  // ==========================================================
 
   function updateTracker() {
     const pct = Math.max(0, Math.min(100, (ROBUX_RAISED / ROBUX_GOAL) * 100));
@@ -804,11 +759,7 @@
   updateTracker();
   spawnParticles();
 
-  // ==========================================================
-  // BACKGROUND MUSIC PLAYER — change the video ID to swap tracks
-  // ==========================================================
   const YT_VIDEO_ID = "URtsmOwjVLw";
-  // ==========================================================
 
   let ytPlayer;
   let isPlaying = false;
@@ -871,7 +822,6 @@
     muteBtn.style.opacity = isMuted ? 0.4 : 1;
   });
 
-  // Pull the real video title via YouTube's oEmbed endpoint
   fetch("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=" + YT_VIDEO_ID + "&format=json")
     .then(function (r) { return r.json(); })
     .then(function (data) {
