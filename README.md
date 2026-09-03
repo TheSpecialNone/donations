@@ -1,4 +1,4 @@
-# Spvcta Donations
+# TheSpecialNone Donations
 
 This is a small single-page site I built for taking Robux donations through Roblox game passes. There's no backend and no database involved, just one HTML file. Upload it wherever you like and it works right away.
 
