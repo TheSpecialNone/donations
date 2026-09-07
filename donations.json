@@ -1,9 +1,9 @@
 {
-  "totalRaised": 3957,
-  "donationsTotal": 799,
+  "totalRaised": 4307,
+  "donationsTotal": 1149,
   "accountBalance": 3158,
   "goal": 24800,
-  "lastUpdated": "2026-09-07T14:58:21.036Z",
+  "lastUpdated": "2026-09-07T15:08:22.997Z",
   "topDonators": [
     {
       "name": "voemz",
@@ -11,6 +11,13 @@
       "amount": 385,
       "userId": 1521737386,
       "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-835FABE4DE14974193EDCBD05F6AA790-Png/150/150/AvatarHeadshot/Png/isCircular"
+    },
+    {
+      "name": "pyt3e",
+      "displayName": "pytee",
+      "amount": 350,
+      "userId": 1640204305,
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-8FCAAEABA29B40C7FA95E26D06F1E0D0-Png/150/150/AvatarHeadshot/Png/isCircular"
     },
     {
       "name": "tsuchikxge",
