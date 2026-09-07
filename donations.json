@@ -1,9 +1,9 @@
 {
-  "totalRaised": 3954,
-  "donationsTotal": 796,
+  "totalRaised": 3957,
+  "donationsTotal": 799,
   "accountBalance": 3158,
   "goal": 24800,
-  "lastUpdated": "2026-09-07T14:26:38.635Z",
+  "lastUpdated": "2026-09-07T14:58:21.036Z",
   "topDonators": [
     {
       "name": "voemz",
@@ -32,6 +32,13 @@
       "amount": 35,
       "userId": 3205399634,
       "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-BB1144029A4B31D547E5021A918A058E-Png/150/150/AvatarHeadshot/Png/isCircular"
+    },
+    {
+      "name": "Bacaira",
+      "displayName": "Bachira",
+      "amount": 3,
+      "userId": 1720580134,
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-309674E0D9AB07D8DFB95EB43667D46D-Png/150/150/AvatarHeadshot/Png/isCircular"
     },
     {
       "name": "py0ne",
