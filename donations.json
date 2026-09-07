@@ -1,11 +1,11 @@
 {
-  "totalRaised": 8132,
+  "totalRaised": 8230,
   "donationsTotal": 1324,
-  "accountBalance": 6808,
-  "availableRobux": 3158,
-  "pendingRobux": 3650,
+  "accountBalance": 6906,
+  "availableRobux": 4279,
+  "pendingRobux": 2627,
   "goal": 24800,
-  "lastUpdated": "2026-09-07T15:28:36.514Z",
+  "lastUpdated": "2026-09-07T18:50:04.010Z",
   "topDonators": [
     {
       "name": "pyt3e",
@@ -61,7 +61,7 @@
       "displayName": "tezikon",
       "amount": 3,
       "userId": 2218857424,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-26D1B3A1C8ABBBE88DC85432D230E326-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-598DEB1A8876578D2AD078FDA8FC4AE1-Png/150/150/AvatarHeadshot/Png/isCircular"
     }
   ]
 }
