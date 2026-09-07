@@ -1,7 +1,9 @@
 {
-  "totalRaised": 796,
+  "totalRaised": 3954,
+  "donationsTotal": 796,
+  "accountBalance": 3158,
   "goal": 24800,
-  "lastUpdated": "2026-09-07T13:58:58.500Z",
+  "lastUpdated": "2026-09-07T14:26:38.635Z",
   "topDonators": [
     {
       "name": "voemz",
@@ -43,7 +45,7 @@
       "displayName": "tezikon",
       "amount": 3,
       "userId": 2218857424,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-26774827933E92715B7B8C0724A2E2D2-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-26D1B3A1C8ABBBE88DC85432D230E326-Png/150/150/AvatarHeadshot/Png/isCircular"
     }
   ]
 }
