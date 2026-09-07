@@ -24,7 +24,6 @@
     --purple: #b06bd6;
     --red: #e0554c;
 
-    /* leaderboard medal colors */
     --medal-gold: #f4b942;
     --medal-silver: #c7c7d1;
     --medal-bronze: #cd8a4d;
@@ -74,7 +73,24 @@
   .wrap { max-width: 1000px; margin: 0 auto; padding: 40px 20px 100px; position: relative; z-index: 1; }
 
   /* ===================== HERO ===================== */
-  .hero { background: transparent; border: 4px solid var(--line); padding: 36px 30px; margin-bottom: 8px; text-align: center; position: relative; }
+  .hero { background: transparent; border: 4px solid var(--line); padding: 36px 30px; margin-bottom: 8px; text-align: center; position: relative; overflow: hidden; }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 480px; height: 480px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(244,185,66,0.16) 0%, transparent 65%);
+    animation: hero-glow-pulse 4.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes hero-glow-pulse {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.9); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  }
+
+  .hero > * { position: relative; z-index: 1; }
 
   .hero .marquee {
     font-family: 'Press Start 2P', monospace;
@@ -93,7 +109,7 @@
     font-family: 'Press Start 2P', monospace;
     font-size: 2.4rem;
     color: #fff;
-    text-shadow: 4px 4px 0 var(--gold-dark), 8px 8px 0 rgba(0,0,0,0.4);
+    text-shadow: 4px 4px 0 var(--gold-dark), 8px 8px 0 rgba(0,0,0,0.4), 0 0 40px rgba(244,185,66,0.35);
     letter-spacing: 0.04em;
     margin-bottom: 22px;
     display: inline-block;
@@ -126,15 +142,39 @@
 
   /* ===================== SECTION LABELS ===================== */
   .section-label { display: flex; align-items: center; gap: 12px; margin: 56px 0 24px; }
+  .section-label .diamond {
+    width: 9px; height: 9px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    box-shadow: 0 0 8px 1px rgba(244,185,66,0.6);
+    animation: diamond-spin 3s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes diamond-spin {
+    0%, 100% { transform: rotate(45deg) scale(1); }
+    50% { transform: rotate(225deg) scale(1.2); }
+  }
   .section-label .tag { font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #000; background: var(--gold); padding: 8px 12px; border: 3px solid var(--line); }
   .section-label .rule { flex: 1; height: 4px; background: repeating-linear-gradient(90deg, var(--panel-light) 0 8px, transparent 8px 16px); }
 
   /* ===================== GOAL TRACKER ===================== */
-  .tracker { background: var(--panel); border: 3px solid var(--line); box-shadow: 5px 5px 0 0 #000; padding: 24px 26px; }
+  .tracker { background: var(--panel); border: 3px solid var(--line); box-shadow: 5px 5px 0 0 #000; padding: 24px 26px; position: relative; overflow: hidden; }
   .tracker-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
   .tracker-top .raised { font-family: 'VT323', monospace; font-size: 2.6rem; color: var(--green); line-height: 1; }
   .tracker-top .raised span { color: var(--muted); font-size: 1.4rem; }
-  .tracker-top .pct { font-family: 'Press Start 2P', monospace; font-size: 0.85rem; color: var(--gold); background: #000; border: 3px solid var(--line); padding: 8px 12px; }
+  .tracker-top .pct {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.85rem;
+    color: var(--gold);
+    background: #000;
+    border: 3px solid var(--line);
+    padding: 8px 12px;
+    animation: pct-glow 2.4s ease-in-out infinite;
+  }
+  @keyframes pct-glow {
+    0%, 100% { text-shadow: 0 0 4px rgba(244,185,66,0.4); }
+    50% { text-shadow: 0 0 14px rgba(244,185,66,0.9); }
+  }
 
   .bar-outer { background: #000; border: 3px solid var(--line); height: 34px; padding: 3px; position: relative; }
   .bar-inner {
@@ -156,7 +196,7 @@
   @keyframes dot-blink { 50% { opacity: 0.2; } }
 
   /* ===================== TOP DONATORS LEADERBOARD ===================== */
-  .leaderboard { display: flex; flex-direction: column; gap: 10px; }
+  .leaderboard { display: flex; flex-direction: column; gap: 12px; }
 
   .don-row {
     background: var(--panel);
@@ -166,12 +206,16 @@
     display: flex;
     align-items: center;
     gap: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
+  .don-row:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 #000; }
 
-  /* rank badge — plain number by default, medal color for top 3 */
   .don-rank {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.7rem;
+    font-family: 'VT323', monospace;
+    font-size: 1.15rem;
+    line-height: 1;
     color: #000;
     background: #4a4a52;
     width: 30px;
@@ -181,28 +225,76 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    font-weight: 700;
   }
-  .don-row.rank-1 { border-color: var(--medal-gold); box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-gold); }
+
+  /* top-3 get a bigger row, a tinted glow wash, a shimmer sweep, and a bigger badge */
+  .don-row.rank-1, .don-row.rank-2, .don-row.rank-3 { padding: 18px 22px; }
+  .don-row.rank-1 .don-rank, .don-row.rank-2 .don-rank, .don-row.rank-3 .don-rank { width: 38px; height: 38px; font-size: 1.4rem; }
+
+  .don-row.rank-1::before, .don-row.rank-2::before, .don-row.rank-3::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -75%;
+    width: 50%; height: 100%;
+    background: linear-gradient(115deg, transparent, rgba(255,255,255,0.14), transparent);
+    transform: skewX(-20deg);
+    animation: leaderboard-sweep 3.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes leaderboard-sweep { 0% { left: -75%; } 45%, 100% { left: 130%; } }
+
+  .don-row.rank-1 {
+    border-color: var(--medal-gold);
+    background: linear-gradient(135deg, rgba(244,185,66,0.14), var(--panel) 65%);
+    box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-gold), 0 0 20px 0 rgba(244,185,66,0.35);
+    animation: rank1-glow 2.4s ease-in-out infinite;
+  }
+  @keyframes rank1-glow {
+    0%, 100% { box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-gold), 0 0 16px 0 rgba(244,185,66,0.3); }
+    50% { box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-gold), 0 0 32px 2px rgba(244,185,66,0.55); }
+  }
   .don-row.rank-1 .don-rank { background: var(--medal-gold); }
-  .don-row.rank-2 { border-color: var(--medal-silver); box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-silver); }
+
+  .don-row.rank-2 {
+    border-color: var(--medal-silver);
+    background: linear-gradient(135deg, rgba(199,199,209,0.12), var(--panel) 65%);
+    box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-silver);
+  }
   .don-row.rank-2 .don-rank { background: var(--medal-silver); }
-  .don-row.rank-3 { border-color: var(--medal-bronze); box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-bronze); }
+
+  .don-row.rank-3 {
+    border-color: var(--medal-bronze);
+    background: linear-gradient(135deg, rgba(205,138,77,0.12), var(--panel) 65%);
+    box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-bronze);
+  }
   .don-row.rank-3 .don-rank { background: var(--medal-bronze); }
 
-  /* headshot: real avatar if we have one, otherwise a generic pixel-coin fallback */
+  /* crown that sits above rank-1's avatar */
+  .don-crown {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    color: var(--gold);
+    filter: drop-shadow(0 0 6px rgba(244,185,66,0.8));
+    animation: crown-bob 2.4s ease-in-out infinite;
+  }
+  @keyframes crown-bob { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-3px) rotate(8deg); } }
+
+  .don-avatar-wrap { position: relative; flex-shrink: 0; }
+
   .don-avatar {
     width: 40px;
     height: 40px;
-    flex-shrink: 0;
     border-radius: 50%;
     background: #000;
     border: 2px solid var(--line);
     object-fit: cover;
+    display: block;
   }
   .don-avatar-fallback {
     width: 40px;
     height: 40px;
-    flex-shrink: 0;
     border-radius: 50%;
     background: #000;
     border: 2px solid var(--line);
@@ -213,9 +305,20 @@
   }
   .don-avatar-fallback svg { width: 20px; height: 20px; }
 
+  .don-row.rank-1 .don-avatar, .don-row.rank-1 .don-avatar-fallback { width: 56px; height: 56px; border-color: var(--medal-gold); border-width: 3px; }
+  .don-row.rank-2 .don-avatar, .don-row.rank-2 .don-avatar-fallback { width: 48px; height: 48px; border-color: var(--medal-silver); border-width: 3px; }
+  .don-row.rank-3 .don-avatar, .don-row.rank-3 .don-avatar-fallback { width: 48px; height: 48px; border-color: var(--medal-bronze); border-width: 3px; }
+  .don-row.rank-1 .don-avatar-fallback svg { width: 28px; height: 28px; }
+  .don-row.rank-2 .don-avatar-fallback svg, .don-row.rank-3 .don-avatar-fallback svg { width: 24px; height: 24px; }
+
   .don-name { flex: 1; font-weight: 700; font-size: 1rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .don-row.rank-1 .don-name { font-size: 1.25rem; }
+  .don-row.rank-2 .don-name, .don-row.rank-3 .don-name { font-size: 1.1rem; }
   .don-name .don-handle { font-weight: 500; color: var(--muted); font-size: 0.85rem; }
+
   .don-amt { font-family: 'VT323', monospace; font-size: 1.5rem; color: var(--green); flex-shrink: 0; }
+  .don-row.rank-1 .don-amt { font-size: 2.1rem; color: var(--gold); text-shadow: 0 0 12px rgba(244,185,66,0.5); }
+  .don-row.rank-2 .don-amt, .don-row.rank-3 .don-amt { font-size: 1.8rem; }
   .don-amt span { font-size: 0.9rem; color: var(--muted); }
   .empty-state { color: var(--muted); font-size: 0.85rem; text-align: center; padding: 20px; }
 
@@ -259,8 +362,11 @@
 
   .r-common { border-color: #4a4a52; }
   .r-uncommon { border-color: #2f6b3a; }
+  .r-uncommon:hover { box-shadow: 9px 9px 0 0 #000, 0 0 18px 0 rgba(94,194,106,0.3); }
   .r-rare { border-color: #2b7f8c; }
+  .r-rare:hover { box-shadow: 9px 9px 0 0 #000, 0 0 18px 0 rgba(77,208,225,0.3); }
   .r-epic { border-color: #6b3f85; }
+  .r-epic:hover { box-shadow: 9px 9px 0 0 #000, 0 0 18px 0 rgba(176,107,214,0.35); }
   .r-legendary {
     border-color: var(--gold-dark);
     box-shadow: 5px 5px 0 0 #000, 0 0 0 2px var(--gold);
@@ -378,6 +484,7 @@
     .hero h1 { font-size: 1.5rem; }
     .shop { grid-template-columns: repeat(2, 1fr); }
     .r-legendary { grid-column: span 2; }
+    .don-row.rank-1 .don-name { font-size: 1.05rem; }
   }
 </style>
 </head>
@@ -423,6 +530,7 @@
 
   <!-- GOAL TRACKER: numbers come from donations.json, refreshed every few minutes -->
   <div class="section-label">
+    <span class="diamond"></span>
     <span class="tag">GOAL TRACKER</span>
     <div class="rule"></div>
   </div>
@@ -444,6 +552,7 @@
 
   <!-- ITEM SHOP: each card links straight to the matching Roblox gamepass -->
   <div class="section-label">
+    <span class="diamond"></span>
     <span class="tag">ITEM SHOP</span>
     <div class="rule"></div>
   </div>
@@ -532,8 +641,9 @@
 
   </div>
 
-  <!-- TOP DONATORS: rank 1-3 get gold/silver/bronze styling + headshots -->
+  <!-- TOP DONATORS: rank 1-3 get a tiered gold/silver/bronze treatment, crown on #1 -->
   <div class="section-label">
+    <span class="diamond"></span>
     <span class="tag">TOP DONATORS</span>
     <div class="rule"></div>
   </div>
@@ -564,12 +674,16 @@
      Roblox directly, it just polls a static JSON file.
      ===================================================================== */
   const DATA_URL = "./donations.json";
-  const REFRESH_MS = 5 * 60 * 1000; // re-check every 5 minutes
+  const REFRESH_MS = 5 * 60 * 1000;
 
-  // generic fallback icon shown when a donator has no avatarUrl on file
   const AVATAR_FALLBACK_SVG = `
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
       <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/>
+    </svg>`;
+
+  const CROWN_SVG = `
+    <svg class="don-crown" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8z"/>
     </svg>`;
 
   function fmtTimeAgo(iso) {
@@ -612,10 +726,11 @@
     board.innerHTML = donors.slice(0, 10).map((d, i) => {
       const rank = i + 1;
       const rankClass = rank <= 3 ? ` rank-${rank}` : "";
+      const crown = rank === 1 ? CROWN_SVG : "";
       const handle = d.displayName && d.displayName !== d.name
         ? ` <span class="don-handle">(@${escapeHtml(d.displayName)})</span>`
         : "";
-      const avatar = d.avatarUrl
+      const avatarInner = d.avatarUrl
         ? `<img class="don-avatar" src="${d.avatarUrl}" alt="${escapeHtml(d.name)}'s avatar"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
            <div class="don-avatar-fallback" style="display:none">${AVATAR_FALLBACK_SVG}</div>`
@@ -624,7 +739,7 @@
       return `
         <div class="don-row${rankClass}">
           <div class="don-rank">${rank}</div>
-          ${avatar}
+          <div class="don-avatar-wrap">${crown}${avatarInner}</div>
           <div class="don-name">${escapeHtml(d.name)}${handle}</div>
           <div class="don-amt">${d.amount.toLocaleString()} <span>R$</span></div>
         </div>`;
@@ -633,7 +748,7 @@
 
   async function loadData() {
     try {
-      const res = await fetch(DATA_URL + "?t=" + Date.now()); // cache-bust so it's always fresh
+      const res = await fetch(DATA_URL + "?t=" + Date.now());
       if (!res.ok) throw new Error("fetch failed: " + res.status);
       const data = await res.json();
       renderTracker(data);
