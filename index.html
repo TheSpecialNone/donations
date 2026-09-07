@@ -90,12 +90,7 @@
   /* ===================== HERO ===================== */
   .hero { background: transparent; border: 4px solid var(--line); padding: 36px 30px; margin-bottom: 8px; text-align: center; position: relative; overflow: hidden; }
 
-  /* animated frame confined entirely inside the border band — stays inside
-     the notched clip-path/overflow instead of trying to glow past it.
-     Uses a rotating conic gradient rather than a sliding stripe pattern:
-     a straight stripe visually kinks every time it crosses a corner,
-     while a rotation has no directional seam at all, so it reads as
-     genuinely continuous motion with no catch at the same spot each loop. */
+  /* animated rotating frame, masked to the border band */
   @property --frame-angle {
     syntax: '<angle>';
     inherits: false;
@@ -657,12 +652,7 @@
 </div>
 
 <script>
-  /* =====================================================================
-     LIVE DATA: goal tracker + top donators, both pulled from donations.json.
-     That file gets rewritten by update-data.js (run manually or on a
-     schedule via GitHub Actions) — this page itself never talks to
-     Roblox directly, it just polls a static JSON file.
-     ===================================================================== */
+  // live data: tracker + leaderboard, from donations.json
   const DATA_URL = "./donations.json";
   const REFRESH_MS = 5 * 60 * 1000;
 
@@ -752,9 +742,7 @@
   loadData();
   setInterval(loadData, REFRESH_MS);
 
-  /* =====================================================================
-     BACKGROUND PARTICLES: purely decorative floating sparks
-     ===================================================================== */
+  // background sparks
   function spawnParticles() {
     const field = document.getElementById("particles");
     const count = 26;
@@ -775,9 +763,7 @@
   }
   spawnParticles();
 
-  /* =====================================================================
-     SHOP CARD TILT: cards subtly tilt in 3D toward the cursor on hover
-     ===================================================================== */
+  // shop card cursor tilt
   function initCardTilt() {
     document.querySelectorAll(".shop .card").forEach(card => {
       card.addEventListener("mousemove", e => {
