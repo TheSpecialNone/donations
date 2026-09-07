@@ -1,49 +1,6 @@
 {
   "totalRaised": 3116,
   "goal": 24800,
-  "lastUpdated": "2026-09-07T13:33:41.791Z",
-  "topDonators": [
-    {
-      "name": "voemz",
-      "amount": 385,
-      "userId": 1521737386,
-      "avatarUrl": "https://tr.rbxcdn.com/example-1521737386-headshot.png"
-    },
-    {
-      "name": "panda",
-      "amount": 210,
-      "userId": 3299248985,
-      "avatarUrl": "https://tr.rbxcdn.com/example-3299248985-headshot.png"
-    },
-    {
-      "name": "cal",
-      "amount": 195,
-      "userId": 540667186,
-      "avatarUrl": "https://tr.rbxcdn.com/example-540667186-headshot.png"
-    },
-    {
-      "name": "alex",
-      "amount": 175,
-      "userId": 1233558151,
-      "avatarUrl": "https://tr.rbxcdn.com/example-1233558151-headshot.png"
-    },
-    {
-      "name": "travis",
-      "amount": 35,
-      "userId": 3205399634,
-      "avatarUrl": "https://tr.rbxcdn.com/example-3205399634-headshot.png"
-    },
-    {
-      "name": "naw",
-      "amount": 3,
-      "userId": 520099806,
-      "avatarUrl": "https://tr.rbxcdn.com/example-520099806-headshot.png"
-    },
-    {
-      "name": "tezikon",
-      "amount": 3,
-      "userId": 2218857424,
-      "avatarUrl": "https://tr.rbxcdn.com/example-2218857424-headshot.png"
-    }
-  ]
+  "lastUpdated": null,
+  "topDonators": []
 }
