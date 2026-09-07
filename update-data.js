@@ -95,16 +95,49 @@ async function fetchAvatars(userIds) {
   return avatarByUserId;
 }
 
+async function fetchDisplayNames(userIds) {
+  const ids = [...new Set(userIds.filter(Boolean))];
+  const displayNameByUserId = {};
+  if (!ids.length) return displayNameByUserId;
+
+  const CHUNK_SIZE = 100;
+  for (let i = 0; i < ids.length; i += CHUNK_SIZE) {
+    const chunk = ids.slice(i, i + CHUNK_SIZE);
+
+    try {
+      const res = await fetch("https://users.roblox.com/v1/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userIds: chunk, excludeBannedUsers: false }),
+      });
+      if (!res.ok) continue;
+      const json = await res.json();
+      for (const item of json.data) {
+        displayNameByUserId[item.id] = item.displayName;
+      }
+    } catch (err) {
+      console.warn("Display name fetch chunk failed, continuing without it:", err.message);
+    }
+  }
+
+  return displayNameByUserId;
+}
+
 async function main() {
   const transactions = USE_LIVE_FETCH
     ? await fetchTransactionsFromRoblox()
     : loadManualTransactions();
 
   const { totalRaised, topDonators } = aggregate(transactions);
-  const avatarByUserId = await fetchAvatars(topDonators.map(d => d.userId));
+  const userIds = topDonators.map(d => d.userId);
+  const [avatarByUserId, displayNameByUserId] = await Promise.all([
+    fetchAvatars(userIds),
+    fetchDisplayNames(userIds),
+  ]);
 
   const enrichedDonators = topDonators.map(d => ({
     name: d.name,
+    displayName: d.userId ? displayNameByUserId[d.userId] || d.name : d.name,
     amount: d.amount,
     userId: d.userId,
     avatarUrl: d.userId ? avatarByUserId[d.userId] || null : null,
