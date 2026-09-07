@@ -1,12 +1,1 @@
-[
-  { "buyer": "travis", "amount": 35, "userId": 3205399634 },
-  { "buyer": "alex", "amount": 175, "userId": 1233558151 },
-  { "buyer": "cal", "amount": 3, "userId": 540667186 },
-  { "buyer": "cal", "amount": 17, "userId": 540667186 },
-  { "buyer": "cal", "amount": 175, "userId": 540667186 },
-  { "buyer": "voemz", "amount": 35, "userId": 1521737386 },
-  { "buyer": "voemz", "amount": 350, "userId": 1521737386 },
-  { "buyer": "naw", "amount": 3, "userId": 520099806 },
-  { "buyer": "tezikon", "amount": 3, "userId": 2218857424 },
-  { "buyer": "panda", "amount": 210, "userId": 3299248985 }
-]
+[]
