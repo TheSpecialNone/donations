@@ -244,6 +244,7 @@
   .tracker-goal { display: flex; justify-content: space-between; margin-top: 10px; font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--muted); letter-spacing: 0.04em; }
   .tracker-goal .goal-val { color: var(--gold); }
   .tracker-updated { margin-top: 14px; font-size: 0.7rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  .tracker-note { margin-top: 6px; font-size: 0.68rem; color: var(--muted); opacity: 0.75; font-style: italic; }
   .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px 1px var(--green); animation: dot-blink 1.1s steps(2) infinite; }
   @keyframes dot-blink { 50% { opacity: 0.2; } }
 
@@ -533,6 +534,7 @@
       <span class="goal-val" id="tracker-goal-lbl">GOAL: -- R$</span>
     </div>
     <div class="tracker-updated"><span class="live-dot"></span> <span id="tracker-updated-text">loading…</span></div>
+    <div class="tracker-note">this number also counts my own Robux on top of what people donate</div>
   </div>
 
   <!-- ITEM SHOP: each card links straight to the matching Roblox gamepass -->
