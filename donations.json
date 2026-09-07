@@ -1,0 +1,35 @@
+{
+  "totalRaised": 3030,
+  "goal": 24800,
+  "lastUpdated": "2026-09-07T02:37:50.696Z",
+  "topDonators": [
+    {
+      "name": "voemz",
+      "amount": 385
+    },
+    {
+      "name": "panda",
+      "amount": 210
+    },
+    {
+      "name": "cal",
+      "amount": 195
+    },
+    {
+      "name": "alex",
+      "amount": 175
+    },
+    {
+      "name": "travis",
+      "amount": 35
+    },
+    {
+      "name": "naw",
+      "amount": 3
+    },
+    {
+      "name": "tezikon",
+      "amount": 3
+    }
+  ]
+}
