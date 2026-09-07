@@ -4,6 +4,7 @@ const path = require("path");
 const USE_LIVE_FETCH = true;
 const GROUP_ID = process.env.ROBLOX_GROUP_ID || "35995419";
 const GOAL = 24800;
+const CUTOFF_DATE = "2026-03-29T13:46:20.411Z";
 const OUTPUT_PATH = path.join(__dirname, "donations.json");
 const RAW_INPUT_PATH = path.join(__dirname, "raw-transactions.json");
 
@@ -41,6 +42,7 @@ async function fetchTransactionsFromRoblox() {
         buyer: row.agent.name,
         amount: row.currency.amount,
         userId: row.agent.id,
+        created: row.created,
       });
     }
     cursor = json.nextPageCursor || "";
@@ -49,22 +51,25 @@ async function fetchTransactionsFromRoblox() {
   return transactions;
 }
 
+function filterByCutoff(transactions) {
+  if (!CUTOFF_DATE) return transactions;
+  const cutoff = new Date(CUTOFF_DATE).getTime();
+  return transactions.filter(t => !t.created || new Date(t.created).getTime() > cutoff);
+}
+
 function aggregate(transactions) {
   const totals = new Map();
   let totalRaised = 0;
 
   for (const t of transactions) {
     totalRaised += t.amount;
-    const existing = totals.get(t.buyer) || { amount: 0, userId: t.userId || null };
+    const key = t.userId || t.buyer;
+    const existing = totals.get(key) || { name: t.buyer, userId: t.userId || null, amount: 0 };
     existing.amount += t.amount;
-    if (!existing.userId && t.userId) existing.userId = t.userId;
-    totals.set(t.buyer, existing);
+    totals.set(key, existing);
   }
 
-  const topDonators = Array.from(totals.entries())
-    .map(([name, v]) => ({ name, amount: v.amount, userId: v.userId }))
-    .sort((a, b) => b.amount - a.amount);
-
+  const topDonators = Array.from(totals.values()).sort((a, b) => b.amount - a.amount);
   return { totalRaised, topDonators };
 }
 
@@ -95,10 +100,10 @@ async function fetchAvatars(userIds) {
   return avatarByUserId;
 }
 
-async function fetchDisplayNames(userIds) {
+async function fetchUserInfo(userIds) {
   const ids = [...new Set(userIds.filter(Boolean))];
-  const displayNameByUserId = {};
-  if (!ids.length) return displayNameByUserId;
+  const infoByUserId = {};
+  if (!ids.length) return infoByUserId;
 
   const CHUNK_SIZE = 100;
   for (let i = 0; i < ids.length; i += CHUNK_SIZE) {
@@ -113,35 +118,42 @@ async function fetchDisplayNames(userIds) {
       if (!res.ok) continue;
       const json = await res.json();
       for (const item of json.data) {
-        displayNameByUserId[item.id] = item.displayName;
+        infoByUserId[item.id] = { username: item.name, displayName: item.displayName };
       }
     } catch (err) {
-      console.warn("Display name fetch chunk failed, continuing without it:", err.message);
+      console.warn("User info fetch chunk failed, continuing without it:", err.message);
     }
   }
 
-  return displayNameByUserId;
+  return infoByUserId;
 }
 
 async function main() {
-  const transactions = USE_LIVE_FETCH
+  const rawTransactions = USE_LIVE_FETCH
     ? await fetchTransactionsFromRoblox()
     : loadManualTransactions();
 
+  const transactions = filterByCutoff(rawTransactions);
   const { totalRaised, topDonators } = aggregate(transactions);
+
   const userIds = topDonators.map(d => d.userId);
-  const [avatarByUserId, displayNameByUserId] = await Promise.all([
+  const [avatarByUserId, userInfoByUserId] = await Promise.all([
     fetchAvatars(userIds),
-    fetchDisplayNames(userIds),
+    fetchUserInfo(userIds),
   ]);
 
-  const enrichedDonators = topDonators.map(d => ({
-    name: d.name,
-    displayName: d.userId ? displayNameByUserId[d.userId] || d.name : d.name,
-    amount: d.amount,
-    userId: d.userId,
-    avatarUrl: d.userId ? avatarByUserId[d.userId] || null : null,
-  }));
+  const enrichedDonators = topDonators.map(d => {
+    const info = d.userId ? userInfoByUserId[d.userId] : null;
+    const username = info ? info.username : d.name;
+    const displayName = info ? info.displayName : d.name;
+    return {
+      name: username,
+      displayName,
+      amount: d.amount,
+      userId: d.userId,
+      avatarUrl: d.userId ? avatarByUserId[d.userId] || null : null,
+    };
+  });
 
   const data = {
     totalRaised,
