@@ -1,9 +1,11 @@
 {
-  "totalRaised": 4482,
+  "totalRaised": 8132,
   "donationsTotal": 1324,
-  "accountBalance": 3158,
+  "accountBalance": 6808,
+  "availableRobux": 3158,
+  "pendingRobux": 3650,
   "goal": 24800,
-  "lastUpdated": "2026-09-07T15:22:14.676Z",
+  "lastUpdated": "2026-09-07T15:28:36.514Z",
   "topDonators": [
     {
       "name": "pyt3e",
