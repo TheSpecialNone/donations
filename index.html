@@ -214,6 +214,7 @@
   .don-avatar-fallback svg { width: 20px; height: 20px; }
 
   .don-name { flex: 1; font-weight: 700; font-size: 1rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .don-name .don-handle { font-weight: 500; color: var(--muted); font-size: 0.85rem; }
   .don-amt { font-family: 'VT323', monospace; font-size: 1.5rem; color: var(--green); flex-shrink: 0; }
   .don-amt span { font-size: 0.9rem; color: var(--muted); }
   .empty-state { color: var(--muted); font-size: 0.85rem; text-align: center; padding: 20px; }
@@ -611,15 +612,20 @@
     board.innerHTML = donors.slice(0, 10).map((d, i) => {
       const rank = i + 1;
       const rankClass = rank <= 3 ? ` rank-${rank}` : "";
+      const handle = d.displayName && d.displayName !== d.name
+        ? ` <span class="don-handle">(@${escapeHtml(d.displayName)})</span>`
+        : "";
       const avatar = d.avatarUrl
-        ? `<img class="don-avatar" src="${d.avatarUrl}" alt="${escapeHtml(d.name)}'s avatar">`
+        ? `<img class="don-avatar" src="${d.avatarUrl}" alt="${escapeHtml(d.name)}'s avatar"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+           <div class="don-avatar-fallback" style="display:none">${AVATAR_FALLBACK_SVG}</div>`
         : `<div class="don-avatar-fallback">${AVATAR_FALLBACK_SVG}</div>`;
 
       return `
         <div class="don-row${rankClass}">
           <div class="don-rank">${rank}</div>
           ${avatar}
-          <div class="don-name">${escapeHtml(d.name)}</div>
+          <div class="don-name">${escapeHtml(d.name)}${handle}</div>
           <div class="don-amt">${d.amount.toLocaleString()} <span>R$</span></div>
         </div>`;
     }).join("");
