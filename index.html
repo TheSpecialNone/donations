@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* ===================== THEME / BASE ===================== */
   :root {
     --bg: #0c0c0f;
     --panel: #17171c;
@@ -22,10 +23,14 @@
     --cyan: #4dd0e1;
     --purple: #b06bd6;
     --red: #e0554c;
+
+    /* leaderboard medal colors */
+    --medal-gold: #f4b942;
+    --medal-silver: #c7c7d1;
+    --medal-bronze: #cd8a4d;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -38,14 +43,8 @@
     overflow-x: hidden;
   }
 
-  #particles {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
-  }
-
+  /* floating ember/spark background particles behind everything */
+  #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
   .spark {
     position: absolute;
     bottom: -20px;
@@ -55,7 +54,6 @@
     box-shadow: 0 0 6px 1px var(--gold);
     animation: rise linear infinite;
   }
-
   @keyframes rise {
     0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
     10% { opacity: 1; }
@@ -63,6 +61,7 @@
     100% { transform: translateY(-110vh) translateX(var(--drift, 20px)) rotate(180deg); opacity: 0; }
   }
 
+  /* notched pixel-art corner effect, reused on most panels */
   .pixel {
     clip-path: polygon(
       0 8px, 8px 8px, 8px 0,
@@ -72,23 +71,10 @@
     );
   }
 
-  .wrap {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 40px 20px 100px;
-    position: relative;
-    z-index: 1;
-  }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 40px 20px 100px; position: relative; z-index: 1; }
 
-  /* ---------- HERO ---------- */
-  .hero {
-    background: transparent;
-    border: 4px solid var(--line);
-    padding: 36px 30px;
-    margin-bottom: 8px;
-    text-align: center;
-    position: relative;
-  }
+  /* ===================== HERO ===================== */
+  .hero { background: transparent; border: 4px solid var(--line); padding: 36px 30px; margin-bottom: 8px; text-align: center; position: relative; }
 
   .hero .marquee {
     font-family: 'Press Start 2P', monospace;
@@ -98,7 +84,6 @@
     margin-bottom: 18px;
     animation: flicker 4s linear infinite;
   }
-
   @keyframes flicker {
     0%, 19%, 21%, 23%, 46%, 48%, 100% { opacity: 1; text-shadow: 0 0 8px var(--gold); }
     20%, 22%, 47% { opacity: 0.4; text-shadow: none; }
@@ -114,27 +99,11 @@
     display: inline-block;
     animation: title-bob 2.4s ease-in-out infinite;
   }
+  @keyframes title-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 
-  @keyframes title-bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
+  .hero p { color: var(--muted); max-width: 46ch; margin: 0 auto; font-size: 0.92rem; }
 
-  .hero p {
-    color: var(--muted);
-    max-width: 46ch;
-    margin: 0 auto;
-    font-size: 0.92rem;
-  }
-
-  .hero-stats {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    margin-top: 26px;
-    flex-wrap: wrap;
-  }
-
+  .hero-stats { display: flex; justify-content: center; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
   .stat-box {
     background: rgba(0,0,0,0.5);
     border: 3px solid var(--gold-dark);
@@ -148,60 +117,109 @@
       6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px)
     );
   }
-
-  .stat-box .val {
-    animation: led-pulse 2.2s ease-in-out infinite;
-  }
-
+  .stat-box .val { animation: led-pulse 2.2s ease-in-out infinite; font-family: 'VT323', monospace; font-size: 2rem; color: var(--green); line-height: 1; }
   @keyframes led-pulse {
     0%, 100% { text-shadow: 0 0 6px currentColor; }
     50% { text-shadow: 0 0 16px currentColor, 0 0 4px #fff; }
   }
+  .stat-box .lbl { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--muted); margin-top: 6px; letter-spacing: 0.05em; }
 
-  .stat-box .val {
-    font-family: 'VT323', monospace;
-    font-size: 2rem;
-    color: var(--green);
-    line-height: 1;
+  /* ===================== SECTION LABELS ===================== */
+  .section-label { display: flex; align-items: center; gap: 12px; margin: 56px 0 24px; }
+  .section-label .tag { font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #000; background: var(--gold); padding: 8px 12px; border: 3px solid var(--line); }
+  .section-label .rule { flex: 1; height: 4px; background: repeating-linear-gradient(90deg, var(--panel-light) 0 8px, transparent 8px 16px); }
+
+  /* ===================== GOAL TRACKER ===================== */
+  .tracker { background: var(--panel); border: 3px solid var(--line); box-shadow: 5px 5px 0 0 #000; padding: 24px 26px; }
+  .tracker-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .tracker-top .raised { font-family: 'VT323', monospace; font-size: 2.6rem; color: var(--green); line-height: 1; }
+  .tracker-top .raised span { color: var(--muted); font-size: 1.4rem; }
+  .tracker-top .pct { font-family: 'Press Start 2P', monospace; font-size: 0.85rem; color: var(--gold); background: #000; border: 3px solid var(--line); padding: 8px 12px; }
+
+  .bar-outer { background: #000; border: 3px solid var(--line); height: 34px; padding: 3px; position: relative; }
+  .bar-inner {
+    height: 100%;
+    background: repeating-linear-gradient(45deg, var(--green) 0px, var(--green) 10px, #4fae5b 10px, #4fae5b 20px);
+    background-size: 200% 100%;
+    animation: bar-stripes 1.4s linear infinite;
+    position: relative;
+    transition: width 0.6s ease;
+    box-shadow: 0 0 14px 1px rgba(94,194,106,0.6);
   }
+  @keyframes bar-stripes { 0% { background-position: 0 0; } 100% { background-position: 60px 0; } }
+  .bar-inner::after { content: ""; position: absolute; right: 0; top: 0; width: 6px; height: 100%; background: #fff; box-shadow: 0 0 10px 2px #fff; opacity: 0.85; }
 
-  .stat-box .lbl {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.5rem;
-    color: var(--muted);
-    margin-top: 6px;
-    letter-spacing: 0.05em;
-  }
+  .tracker-goal { display: flex; justify-content: space-between; margin-top: 10px; font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--muted); letter-spacing: 0.04em; }
+  .tracker-goal .goal-val { color: var(--gold); }
+  .tracker-updated { margin-top: 14px; font-size: 0.7rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px 1px var(--green); animation: dot-blink 1.1s steps(2) infinite; }
+  @keyframes dot-blink { 50% { opacity: 0.2; } }
 
-  /* ---------- SECTION LABEL ---------- */
-  .section-label {
+  /* ===================== TOP DONATORS LEADERBOARD ===================== */
+  .leaderboard { display: flex; flex-direction: column; gap: 10px; }
+
+  .don-row {
+    background: var(--panel);
+    border: 3px solid var(--line);
+    box-shadow: 4px 4px 0 0 #000;
+    padding: 12px 18px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 56px 0 24px;
+    gap: 14px;
   }
 
-  .section-label .tag {
+  /* rank badge — plain number by default, medal color for top 3 */
+  .don-rank {
     font-family: 'Press Start 2P', monospace;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #000;
-    background: var(--gold);
-    padding: 8px 12px;
-    border: 3px solid var(--line);
+    background: #4a4a52;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
   }
+  .don-row.rank-1 { border-color: var(--medal-gold); box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-gold); }
+  .don-row.rank-1 .don-rank { background: var(--medal-gold); }
+  .don-row.rank-2 { border-color: var(--medal-silver); box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-silver); }
+  .don-row.rank-2 .don-rank { background: var(--medal-silver); }
+  .don-row.rank-3 { border-color: var(--medal-bronze); box-shadow: 4px 4px 0 0 #000, 0 0 0 2px var(--medal-bronze); }
+  .don-row.rank-3 .don-rank { background: var(--medal-bronze); }
 
-  .section-label .rule {
-    flex: 1;
-    height: 4px;
-    background: repeating-linear-gradient(90deg, var(--panel-light) 0 8px, transparent 8px 16px);
+  /* headshot: real avatar if we have one, otherwise a generic pixel-coin fallback */
+  .don-avatar {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #000;
+    border: 2px solid var(--line);
+    object-fit: cover;
   }
+  .don-avatar-fallback {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #000;
+    border: 2px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+  }
+  .don-avatar-fallback svg { width: 20px; height: 20px; }
 
-  /* ---------- ITEM SHOP GRID ---------- */
-  .shop {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
+  .don-name { flex: 1; font-weight: 700; font-size: 1rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .don-amt { font-family: 'VT323', monospace; font-size: 1.5rem; color: var(--green); flex-shrink: 0; }
+  .don-amt span { font-size: 0.9rem; color: var(--muted); }
+  .empty-state { color: var(--muted); font-size: 0.85rem; text-align: center; padding: 20px; }
+
+  /* ===================== ITEM SHOP GRID ===================== */
+  .shop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 
   .card {
     background: var(--panel);
@@ -217,7 +235,6 @@
     overflow: hidden;
     transform-style: preserve-3d;
   }
-
   .card::before {
     content: "";
     position: absolute;
@@ -228,30 +245,11 @@
     transition: left 0.55s ease;
     pointer-events: none;
   }
-
   .card:hover::before { left: 130%; }
+  .card:hover { transform: translate(-4px, -4px) rotate(-0.4deg); box-shadow: 9px 9px 0 0 #000; background: var(--panel-light); }
+  .card:active { transform: translate(0, 0); box-shadow: 2px 2px 0 0 #000; }
 
-  .card:hover {
-    transform: translate(-4px, -4px) rotate(-0.4deg);
-    box-shadow: 9px 9px 0 0 #000;
-    background: var(--panel-light);
-  }
-
-  .card:active {
-    transform: translate(0, 0);
-    box-shadow: 2px 2px 0 0 #000;
-  }
-
-  .rarity-tag {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.5rem;
-    letter-spacing: 0.05em;
-    padding: 5px 8px;
-    align-self: flex-start;
-    margin-bottom: 14px;
-    color: #000;
-  }
-
+  .rarity-tag { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; letter-spacing: 0.05em; padding: 5px 8px; align-self: flex-start; margin-bottom: 14px; color: #000; }
   .r-common .rarity-tag { background: #9c9ca6; }
   .r-uncommon .rarity-tag { background: var(--green); }
   .r-rare .rarity-tag { background: var(--cyan); }
@@ -268,66 +266,26 @@
     grid-column: span 2;
     animation: legendary-pulse 2.2s ease-in-out infinite;
   }
-
   @keyframes legendary-pulse {
     0%, 100% { box-shadow: 5px 5px 0 0 #000, 0 0 0 2px var(--gold), 0 0 14px 0 rgba(244,185,66,0.35); }
     50% { box-shadow: 5px 5px 0 0 #000, 0 0 0 2px var(--gold), 0 0 34px 4px rgba(244,185,66,0.6); }
   }
+  .r-legendary .coin-icon { animation: spin-coin 3.5s linear infinite; }
+  @keyframes spin-coin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
 
-  .r-legendary .coin-icon {
-    animation: spin-coin 3.5s linear infinite;
-  }
-
-  @keyframes spin-coin {
-    0% { transform: rotateY(0deg); }
-    100% { transform: rotateY(360deg); }
-  }
-
-  .coin-icon {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 10px;
-  }
-
-  .card .amt {
-    font-family: 'VT323', monospace;
-    font-size: 2.4rem;
-    line-height: 1;
-    color: #fff;
-  }
-
+  .coin-icon { width: 30px; height: 30px; margin-bottom: 10px; }
+  .card .amt { font-family: 'VT323', monospace; font-size: 2.4rem; line-height: 1; color: #fff; }
   .r-legendary .amt { font-size: 3rem; color: var(--gold); }
-
-  .card .amt-lbl {
-    font-size: 0.62rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 2px;
-  }
-
-  .card .buy {
-    margin-top: auto;
-    padding-top: 16px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.55rem;
-    color: var(--green);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
+  .card .amt-lbl { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+  .card .buy { margin-top: auto; padding-top: 16px; font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--green); display: flex; align-items: center; gap: 6px; }
   .card .buy svg { width: 12px; height: 12px; }
 
+  /* ===================== PREMIUM / PROFILE DONATE NOTE ===================== */
   @keyframes profile-glow {
     0%, 100% { box-shadow: 5px 5px 0 0 #000, 0 0 0 2px var(--gold-dark), 0 0 14px 0 rgba(244,185,66,0.3); }
     50% { box-shadow: 5px 5px 0 0 #000, 0 0 0 2px var(--gold-dark), 0 0 28px 3px rgba(244,185,66,0.55); }
   }
-
-  @keyframes btn-sweep {
-    0% { left: -75%; }
-    50%, 100% { left: 130%; }
-  }
+  @keyframes btn-sweep { 0% { left: -75%; } 50%, 100% { left: 130%; } }
 
   .premium-note {
     display: flex;
@@ -345,7 +303,6 @@
     overflow: hidden;
     animation: profile-glow 2.6s ease-in-out infinite;
   }
-
   .premium-note::before {
     content: "";
     position: absolute;
@@ -355,133 +312,15 @@
     transform: skewX(-20deg);
     animation: btn-sweep 2.6s ease-in-out infinite;
   }
+  .premium-note:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 0 #000, 0 0 0 2px var(--gold); background: var(--panel-light); }
+  .premium-note:active { transform: translate(0, 0); box-shadow: 2px 2px 0 0 #000; }
 
-  .premium-note:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 8px 8px 0 0 #000, 0 0 0 2px var(--gold);
-    background: var(--panel-light);
-  }
+  .premium-icon { width: 46px; height: 46px; flex-shrink: 0; image-rendering: pixelated; filter: drop-shadow(2px 2px 0 #000); animation: spin-coin 3.5s linear infinite; }
+  .premium-text { flex: 1; min-width: 0; }
+  .premium-title { font-family: 'Press Start 2P', monospace; font-size: 0.62rem; color: var(--gold); letter-spacing: 0.04em; margin-bottom: 6px; }
+  .premium-sub { font-size: 0.82rem; color: var(--muted); }
 
-  .premium-note:active {
-    transform: translate(0, 0);
-    box-shadow: 2px 2px 0 0 #000;
-  }
-
-  .premium-icon {
-    width: 46px;
-    height: 46px;
-    flex-shrink: 0;
-    image-rendering: pixelated;
-    filter: drop-shadow(2px 2px 0 #000);
-    animation: spin-coin 3.5s linear infinite;
-  }
-
-  .premium-text {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .premium-title {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.62rem;
-    color: var(--gold);
-    letter-spacing: 0.04em;
-    margin-bottom: 6px;
-  }
-
-  .premium-sub {
-    font-size: 0.82rem;
-    color: var(--muted);
-  }
-
-  /* ---------- ROBUX TRACKER ---------- */
-  .tracker {
-    background: var(--panel);
-    border: 3px solid var(--line);
-    box-shadow: 5px 5px 0 0 #000;
-    padding: 24px 26px;
-  }
-
-  .tracker-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
-
-  .tracker-top .raised {
-    font-family: 'VT323', monospace;
-    font-size: 2.6rem;
-    color: var(--green);
-    line-height: 1;
-  }
-
-  .tracker-top .raised span {
-    color: var(--muted);
-    font-size: 1.4rem;
-  }
-
-  .tracker-top .pct {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.85rem;
-    color: var(--gold);
-    background: #000;
-    border: 3px solid var(--line);
-    padding: 8px 12px;
-  }
-
-  .bar-outer {
-    background: #000;
-    border: 3px solid var(--line);
-    height: 34px;
-    padding: 3px;
-    position: relative;
-  }
-
-  .bar-inner {
-    height: 100%;
-    background: repeating-linear-gradient(
-      45deg,
-      var(--green) 0px, var(--green) 10px,
-      #4fae5b 10px, #4fae5b 20px
-    );
-    background-size: 200% 100%;
-    animation: bar-stripes 1.4s linear infinite;
-    position: relative;
-    transition: width 0.6s ease;
-    box-shadow: 0 0 14px 1px rgba(94,194,106,0.6);
-  }
-
-  @keyframes bar-stripes {
-    0% { background-position: 0 0; }
-    100% { background-position: 60px 0; }
-  }
-
-  .bar-inner::after {
-    content: "";
-    position: absolute;
-    right: 0; top: 0;
-    width: 6px; height: 100%;
-    background: #fff;
-    box-shadow: 0 0 10px 2px #fff;
-    opacity: 0.85;
-  }
-
-  .tracker-goal {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.55rem;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-  }
-
-  .tracker-goal .goal-val { color: var(--gold); }
-
-  /* ---------- MUSIC PLAYER ---------- */
+  /* ===================== MUSIC PLAYER (floating, bottom-right) ===================== */
   #music-player {
     position: fixed;
     bottom: 18px;
@@ -496,7 +335,6 @@
     max-width: 260px;
     box-shadow: 4px 4px 0 0 #000, 0 0 0 3px var(--line);
   }
-
   .music-btn {
     position: relative;
     background: #000;
@@ -517,82 +355,23 @@
     );
     transition: transform 0.1s ease;
   }
-
   .music-btn:hover { background: var(--panel-light); transform: translate(-1px, -1px); }
   .music-btn:active { transform: translate(0, 0); }
-
   .music-btn svg { width: 14px; height: 14px; }
 
-  .music-info {
-    overflow: hidden;
-    flex: 1;
-    min-width: 0;
-  }
+  .music-info { overflow: hidden; flex: 1; min-width: 0; }
+  .music-label { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--muted); letter-spacing: 0.06em; display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .music-dot { width: 6px; height: 6px; background: #444; border-radius: 50%; }
+  .music-dot.live { background: var(--green); box-shadow: 0 0 6px 1px var(--green); animation: dot-blink 1.1s steps(2) infinite; }
 
-  .music-label {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.5rem;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 4px;
-  }
+  .music-title-wrap { overflow: hidden; white-space: nowrap; width: 100%; }
+  .music-title { display: inline-block; font-size: 0.72rem; font-weight: 700; color: var(--text); padding-left: 0; }
+  .music-title.scroll { animation: ticker 9s linear infinite; padding-left: 100%; }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-  .music-dot {
-    width: 6px;
-    height: 6px;
-    background: #444;
-    border-radius: 50%;
-  }
+  @media (max-width: 560px) { #music-player { max-width: 200px; padding: 10px 12px; } }
 
-  .music-dot.live {
-    background: var(--green);
-    box-shadow: 0 0 6px 1px var(--green);
-    animation: dot-blink 1.1s steps(2) infinite;
-  }
-
-  @keyframes dot-blink {
-    50% { opacity: 0.2; }
-  }
-
-  .music-title-wrap {
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-  }
-
-  .music-title {
-    display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--text);
-    padding-left: 0;
-  }
-
-  .music-title.scroll {
-    animation: ticker 9s linear infinite;
-    padding-left: 100%;
-  }
-
-  @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-  }
-
-  @media (max-width: 560px) {
-    #music-player { max-width: 200px; padding: 10px 12px; }
-  }
-
-  footer {
-    margin-top: 72px;
-    font-size: 0.75rem;
-    color: var(--muted);
-    border-top: 2px dashed #333;
-    padding-top: 20px;
-    text-align: center;
-  }
+  footer { margin-top: 72px; font-size: 0.75rem; color: var(--muted); border-top: 2px dashed #333; padding-top: 20px; text-align: center; }
 
   @media (max-width: 720px) {
     .hero h1 { font-size: 1.5rem; }
@@ -605,6 +384,7 @@
 
 <div id="particles"></div>
 
+<!-- floating background music widget -->
 <div id="music-player">
   <button id="music-toggle" class="music-btn" aria-label="Play music">
     <svg viewBox="0 0 24 24" fill="currentColor" id="music-toggle-icon"><path d="M8 5v14l11-7z"/></svg>
@@ -619,11 +399,11 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
   </button>
 </div>
-
 <div id="yt-audio" style="position:fixed; width:1px; height:1px; opacity:0; pointer-events:none; bottom:0; right:0;"></div>
 
 <div class="wrap">
 
+  <!-- HERO -->
   <div class="hero pixel">
     <div class="marquee">★ SUPPORT ME ★</div>
     <h1>SPVCTA</h1>
@@ -640,6 +420,7 @@
     </div>
   </div>
 
+  <!-- GOAL TRACKER: numbers come from donations.json, refreshed every few minutes -->
   <div class="section-label">
     <span class="tag">GOAL TRACKER</span>
     <div class="rule"></div>
@@ -647,18 +428,20 @@
 
   <div class="tracker pixel">
     <div class="tracker-top">
-      <div class="raised" id="tracker-raised">1,153 <span>/ 24,800 R$</span></div>
-      <div class="pct" id="tracker-pct">5%</div>
+      <div class="raised" id="tracker-raised">-- <span>/ -- R$</span></div>
+      <div class="pct" id="tracker-pct">--%</div>
     </div>
     <div class="bar-outer">
-      <div class="bar-inner" id="tracker-bar" style="width: 5%;"></div>
+      <div class="bar-inner" id="tracker-bar" style="width: 0%;"></div>
     </div>
     <div class="tracker-goal">
       <span>0 R$</span>
-      <span class="goal-val" id="tracker-goal-lbl">GOAL: 24,800 R$</span>
+      <span class="goal-val" id="tracker-goal-lbl">GOAL: -- R$</span>
     </div>
+    <div class="tracker-updated"><span class="live-dot"></span> <span id="tracker-updated-text">loading…</span></div>
   </div>
 
+  <!-- ITEM SHOP: each card links straight to the matching Roblox gamepass -->
   <div class="section-label">
     <span class="tag">ITEM SHOP</span>
     <div class="rule"></div>
@@ -748,6 +531,16 @@
 
   </div>
 
+  <!-- TOP DONATORS: rank 1-3 get gold/silver/bronze styling + headshots -->
+  <div class="section-label">
+    <span class="tag">TOP DONATORS</span>
+    <div class="rule"></div>
+  </div>
+
+  <div class="leaderboard pixel" id="leaderboard">
+    <div class="empty-state">Loading…</div>
+  </div>
+
   <a class="premium-note pixel" href="https://www.roblox.com/users/902603595/profile" target="_blank" rel="noopener">
     <img class="premium-icon" src="https://tr.rbxcdn.com/180DAY-3aed82b14905b5d2bea1933175c33b17/420/420/Hat/Webp/noFilter" alt="Roblox Premium">
     <div class="premium-text">
@@ -763,18 +556,94 @@
 </div>
 
 <script>
-  const ROBUX_RAISED = 3030;
-  const ROBUX_GOAL = 24800;
+  /* =====================================================================
+     LIVE DATA: goal tracker + top donators, both pulled from donations.json.
+     That file gets rewritten by update-data.js (run manually or on a
+     schedule via GitHub Actions) — this page itself never talks to
+     Roblox directly, it just polls a static JSON file.
+     ===================================================================== */
+  const DATA_URL = "./donations.json";
+  const REFRESH_MS = 5 * 60 * 1000; // re-check every 5 minutes
 
-  function updateTracker() {
-    const pct = Math.max(0, Math.min(100, (ROBUX_RAISED / ROBUX_GOAL) * 100));
-    document.getElementById("tracker-raised").innerHTML =
-      ROBUX_RAISED.toLocaleString() + ' <span>/ ' + ROBUX_GOAL.toLocaleString() + ' R$</span>';
-    document.getElementById("tracker-pct").textContent = pct.toFixed(1) + "%";
-    document.getElementById("tracker-bar").style.width = pct + "%";
-    document.getElementById("tracker-goal-lbl").textContent = "GOAL: " + ROBUX_GOAL.toLocaleString() + " R$";
+  // generic fallback icon shown when a donator has no avatarUrl on file
+  const AVATAR_FALLBACK_SVG = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/>
+    </svg>`;
+
+  function fmtTimeAgo(iso) {
+    const diffMs = Date.now() - new Date(iso).getTime();
+    const mins = Math.round(diffMs / 60000);
+    if (mins < 1) return "updated just now";
+    if (mins < 60) return "updated " + mins + "m ago";
+    const hrs = Math.round(mins / 60);
+    if (hrs < 24) return "updated " + hrs + "h ago";
+    return "updated " + Math.round(hrs / 24) + "d ago";
   }
 
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function renderTracker(data) {
+    const raised = data.totalRaised || 0;
+    const goal = data.goal || 1;
+    const pct = Math.max(0, Math.min(100, (raised / goal) * 100));
+
+    document.getElementById("tracker-raised").innerHTML =
+      raised.toLocaleString() + ' <span>/ ' + goal.toLocaleString() + ' R$</span>';
+    document.getElementById("tracker-pct").textContent = pct.toFixed(1) + "%";
+    document.getElementById("tracker-bar").style.width = pct + "%";
+    document.getElementById("tracker-goal-lbl").textContent = "GOAL: " + goal.toLocaleString() + " R$";
+    document.getElementById("tracker-updated-text").textContent =
+      data.lastUpdated ? fmtTimeAgo(data.lastUpdated) : "no update timestamp";
+  }
+
+  function renderLeaderboard(data) {
+    const board = document.getElementById("leaderboard");
+    const donors = (data.topDonators || []).slice().sort((a, b) => b.amount - a.amount);
+
+    if (!donors.length) {
+      board.innerHTML = '<div class="empty-state">No donations recorded yet.</div>';
+      return;
+    }
+
+    board.innerHTML = donors.slice(0, 10).map((d, i) => {
+      const rank = i + 1;
+      const rankClass = rank <= 3 ? ` rank-${rank}` : "";
+      const avatar = d.avatarUrl
+        ? `<img class="don-avatar" src="${d.avatarUrl}" alt="${escapeHtml(d.name)}'s avatar">`
+        : `<div class="don-avatar-fallback">${AVATAR_FALLBACK_SVG}</div>`;
+
+      return `
+        <div class="don-row${rankClass}">
+          <div class="don-rank">${rank}</div>
+          ${avatar}
+          <div class="don-name">${escapeHtml(d.name)}</div>
+          <div class="don-amt">${d.amount.toLocaleString()} <span>R$</span></div>
+        </div>`;
+    }).join("");
+  }
+
+  async function loadData() {
+    try {
+      const res = await fetch(DATA_URL + "?t=" + Date.now()); // cache-bust so it's always fresh
+      if (!res.ok) throw new Error("fetch failed: " + res.status);
+      const data = await res.json();
+      renderTracker(data);
+      renderLeaderboard(data);
+    } catch (err) {
+      console.error("Failed to load donation data", err);
+      document.getElementById("tracker-updated-text").textContent = "couldn't load data";
+    }
+  }
+
+  loadData();
+  setInterval(loadData, REFRESH_MS);
+
+  /* =====================================================================
+     BACKGROUND PARTICLES: purely decorative floating sparks
+     ===================================================================== */
   function spawnParticles() {
     const field = document.getElementById("particles");
     const count = 26;
@@ -793,10 +662,12 @@
       field.appendChild(s);
     }
   }
-
-  updateTracker();
   spawnParticles();
 
+  /* =====================================================================
+     BACKGROUND MUSIC PLAYER: hidden YouTube iframe used purely as an
+     audio source, with a small play/pause + mute widget bottom-right.
+     ===================================================================== */
   const YT_VIDEO_ID = "URtsmOwjVLw";
 
   let ytPlayer;
@@ -823,18 +694,8 @@
       height: "1",
       width: "1",
       videoId: YT_VIDEO_ID,
-      playerVars: {
-        autoplay: 0,
-        controls: 0,
-        loop: 1,
-        playlist: YT_VIDEO_ID,
-        modestbranding: 1
-      },
-      events: {
-        onReady: function () {
-          titleEl.textContent = "Tap play to listen";
-        }
-      }
+      playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: YT_VIDEO_ID, modestbranding: 1 },
+      events: { onReady: function () { titleEl.textContent = "Tap play to listen"; } }
     });
   };
 
@@ -861,16 +722,14 @@
   });
 
   fetch("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=" + YT_VIDEO_ID + "&format=json")
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
+    .then(r => r.json())
+    .then(data => {
       if (data && data.title) {
         titleEl.textContent = data.title;
         if (data.title.length > 26) titleEl.classList.add("scroll");
       }
     })
-    .catch(function () {
-      titleEl.textContent = "Tap play to listen";
-    });
+    .catch(() => { titleEl.textContent = "Tap play to listen"; });
 
   loadYT();
 </script>
