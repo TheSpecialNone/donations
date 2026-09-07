@@ -1,14 +1,8 @@
 name: Update donation data
-
-# Only useful once update-data.js's fetchTransactionsFromRoblox() is filled
-# in and USE_LIVE_FETCH is set to true. Add your session cookie as a repo
-# secret named ROBLOX_COOKIE (Settings → Secrets and variables → Actions)
-# before enabling this.
-
 on:
   schedule:
-    - cron: "*/30 * * * *" # every 30 minutes
-  workflow_dispatch: {}     # lets you trigger it manually too
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}     
 
 permissions:
   contents: write
