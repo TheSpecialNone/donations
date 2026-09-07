@@ -128,13 +128,45 @@ async function fetchUserInfo(userIds) {
   return infoByUserId;
 }
 
+async function fetchAccountRobuxBalance() {
+  const cookie = process.env.ROBLOX_COOKIE;
+  if (!cookie) return 0;
+
+  try {
+    const authRes = await fetch("https://users.roblox.com/v1/users/authenticated", {
+      headers: { Cookie: `.ROBLOSECURITY=${cookie}` },
+    });
+    if (!authRes.ok) {
+      console.warn("Could not identify authenticated account, skipping balance:", authRes.status);
+      return 0;
+    }
+    const { id: userId } = await authRes.json();
+
+    const currencyRes = await fetch(`https://economy.roblox.com/v1/users/${userId}/currency`, {
+      headers: { Cookie: `.ROBLOSECURITY=${cookie}` },
+    });
+    if (!currencyRes.ok) {
+      console.warn("Could not fetch account balance, skipping:", currencyRes.status);
+      return 0;
+    }
+    const { robux } = await currencyRes.json();
+    return robux || 0;
+  } catch (err) {
+    console.warn("Account balance fetch failed, continuing without it:", err.message);
+    return 0;
+  }
+}
+
 async function main() {
   const rawTransactions = USE_LIVE_FETCH
     ? await fetchTransactionsFromRoblox()
     : loadManualTransactions();
 
   const transactions = filterByCutoff(rawTransactions);
-  const { totalRaised, topDonators } = aggregate(transactions);
+  const { totalRaised: donationsTotal, topDonators } = aggregate(transactions);
+
+  const accountBalance = USE_LIVE_FETCH ? await fetchAccountRobuxBalance() : 0;
+  const totalRaised = donationsTotal + accountBalance;
 
   const userIds = topDonators.map(d => d.userId);
   const [avatarByUserId, userInfoByUserId] = await Promise.all([
@@ -157,13 +189,15 @@ async function main() {
 
   const data = {
     totalRaised,
+    donationsTotal,
+    accountBalance,
     goal: GOAL,
     lastUpdated: new Date().toISOString(),
     topDonators: enrichedDonators,
   };
 
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(data, null, 2));
-  console.log(`Wrote ${OUTPUT_PATH} — total raised: ${totalRaised} / ${GOAL}`);
+  console.log(`Wrote ${OUTPUT_PATH} — total raised: ${totalRaised} (donations: ${donationsTotal} + balance: ${accountBalance}) / ${GOAL}`);
 }
 
 main().catch(err => {
