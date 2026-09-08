@@ -1,12 +1,19 @@
 {
-  "totalRaised": 8514,
-  "donationsTotal": 1324,
+  "totalRaised": 9114,
+  "donationsTotal": 1924,
   "accountBalance": 7190,
-  "availableRobux": 4492,
-  "pendingRobux": 2698,
+  "availableRobux": 4534,
+  "pendingRobux": 2656,
   "goal": 24800,
-  "lastUpdated": "2026-09-08T13:44:51.956Z",
+  "lastUpdated": "2026-09-08T16:33:10.358Z",
   "topDonators": [
+    {
+      "name": "C0MPP",
+      "displayName": "comp",
+      "amount": 600,
+      "userId": 1754200936,
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-89B0A7C5853F0A09415B4AE488A7F45B-Png/150/150/AvatarHeadshot/Png/isCircular"
+    },
     {
       "name": "pyt3e",
       "displayName": "pytee",
@@ -61,7 +68,7 @@
       "displayName": "tezikon",
       "amount": 3,
       "userId": 2218857424,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-9AB884434B3A2E0954E472669697AC95-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-26774827933E92715B7B8C0724A2E2D2-Png/150/150/AvatarHeadshot/Png/isCircular"
     }
   ]
 }
