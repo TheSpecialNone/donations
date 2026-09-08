@@ -4,7 +4,8 @@ const path = require("path");
 const USE_LIVE_FETCH = true;
 const GROUP_ID = process.env.ROBLOX_GROUP_ID || "35995419";
 const GOAL = 24800;
-const CUTOFF_DATE = "2026-03-29T13:46:20.411Z";
+const SALES_CUTOFF_DATE = "2026-03-29T13:46:20.411Z";
+const TRANSFERS_CUTOFF_DATE = "2026-09-01T00:00:00.000Z";
 const OUTPUT_PATH = path.join(__dirname, "donations.json");
 const RAW_INPUT_PATH = path.join(__dirname, "raw-transactions.json");
 
@@ -17,10 +18,19 @@ function loadManualTransactions() {
   return JSON.parse(fs.readFileSync(RAW_INPUT_PATH, "utf8"));
 }
 
-async function fetchTransactionsFromRoblox() {
-  const cookie = process.env.ROBLOX_COOKIE;
-  if (!cookie) throw new Error("Set ROBLOX_COOKIE env var first.");
+async function fetchAuthenticatedUserId(cookie) {
+  const res = await fetch("https://users.roblox.com/v1/users/authenticated", {
+    headers: { Cookie: `.ROBLOSECURITY=${cookie}` },
+  });
+  if (!res.ok) {
+    console.warn("Could not identify authenticated account:", res.status);
+    return null;
+  }
+  const { id } = await res.json();
+  return id;
+}
 
+async function fetchGroupSales(cookie) {
   const transactions = [];
   let cursor = "";
 
@@ -29,12 +39,8 @@ async function fetchTransactionsFromRoblox() {
       `https://apis.roblox.com/transaction-records/v1/groups/${GROUP_ID}/transactions` +
       `?cursor=${encodeURIComponent(cursor)}&limit=100&transactionType=Sale`;
 
-    const res = await fetch(url, {
-      headers: { Cookie: `.ROBLOSECURITY=${cookie}` },
-    });
-    if (!res.ok) {
-      throw new Error(`Roblox request failed: ${res.status} ${res.statusText}`);
-    }
+    const res = await fetch(url, { headers: { Cookie: `.ROBLOSECURITY=${cookie}` } });
+    if (!res.ok) throw new Error(`Roblox request failed: ${res.status} ${res.statusText}`);
 
     const json = await res.json();
     for (const row of json.data) {
@@ -51,9 +57,41 @@ async function fetchTransactionsFromRoblox() {
   return transactions;
 }
 
-function filterByCutoff(transactions) {
-  if (!CUTOFF_DATE) return transactions;
-  const cutoff = new Date(CUTOFF_DATE).getTime();
+async function fetchIncomingTransfers(cookie, userId) {
+  if (!userId) return [];
+  const transactions = [];
+  let cursor = "";
+
+  do {
+    const url =
+      `https://apis.roblox.com/transaction-records/v1/users/${userId}/transactions` +
+      `?cursor=${encodeURIComponent(cursor)}&limit=100&transactionType=CurrencyTransfer&itemPricingType=PaidAndLimited`;
+
+    const res = await fetch(url, { headers: { Cookie: `.ROBLOSECURITY=${cookie}` } });
+    if (!res.ok) {
+      console.warn("Could not fetch incoming transfers, skipping:", res.status);
+      return transactions;
+    }
+
+    const json = await res.json();
+    for (const row of json.data) {
+      if (row.details.transferRole !== "Receiver") continue;
+      transactions.push({
+        buyer: row.details.counterPartyName,
+        amount: row.currency.amount,
+        userId: Number(row.details.senderTargetId) || null,
+        created: row.created,
+      });
+    }
+    cursor = json.nextPageCursor || "";
+  } while (cursor);
+
+  return transactions;
+}
+
+function filterByCutoff(transactions, cutoffIso) {
+  if (!cutoffIso) return transactions;
+  const cutoff = new Date(cutoffIso).getTime();
   return transactions.filter(t => !t.created || new Date(t.created).getTime() > cutoff);
 }
 
@@ -128,20 +166,10 @@ async function fetchUserInfo(userIds) {
   return infoByUserId;
 }
 
-async function fetchAccountRobuxBalance() {
-  const cookie = process.env.ROBLOX_COOKIE;
-  if (!cookie) return { available: 0, pending: 0 };
+async function fetchAccountRobuxBalance(cookie, userId) {
+  if (!cookie || !userId) return { available: 0, pending: 0 };
 
   try {
-    const authRes = await fetch("https://users.roblox.com/v1/users/authenticated", {
-      headers: { Cookie: `.ROBLOSECURITY=${cookie}` },
-    });
-    if (!authRes.ok) {
-      console.warn("Could not identify authenticated account, skipping balance:", authRes.status);
-      return { available: 0, pending: 0 };
-    }
-    const { id: userId } = await authRes.json();
-
     const currencyRes = await fetch(`https://economy.roblox.com/v1/users/${userId}/currency`, {
       headers: { Cookie: `.ROBLOSECURITY=${cookie}` },
     });
@@ -163,16 +191,30 @@ async function fetchAccountRobuxBalance() {
 }
 
 async function main() {
-  const rawTransactions = USE_LIVE_FETCH
-    ? await fetchTransactionsFromRoblox()
-    : loadManualTransactions();
+  const cookie = process.env.ROBLOX_COOKIE;
 
-  const transactions = filterByCutoff(rawTransactions);
+  let salesTransactions = [];
+  let transferTransactions = [];
+  let availableRobux = 0;
+  let pendingRobux = 0;
+
+  if (USE_LIVE_FETCH) {
+    const authUserId = await fetchAuthenticatedUserId(cookie);
+    salesTransactions = await fetchGroupSales(cookie);
+    transferTransactions = await fetchIncomingTransfers(cookie, authUserId);
+    const balance = await fetchAccountRobuxBalance(cookie, authUserId);
+    availableRobux = balance.available;
+    pendingRobux = balance.pending;
+  } else {
+    salesTransactions = loadManualTransactions();
+  }
+
+  const transactions = [
+    ...filterByCutoff(salesTransactions, SALES_CUTOFF_DATE),
+    ...filterByCutoff(transferTransactions, TRANSFERS_CUTOFF_DATE),
+  ];
+
   const { totalRaised: donationsTotal, topDonators } = aggregate(transactions);
-
-  const { available: availableRobux, pending: pendingRobux } = USE_LIVE_FETCH
-    ? await fetchAccountRobuxBalance()
-    : { available: 0, pending: 0 };
   const accountBalance = availableRobux + pendingRobux;
   const totalRaised = donationsTotal + accountBalance;
 
