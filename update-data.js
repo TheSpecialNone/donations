@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const USE_LIVE_FETCH = true;
-const GROUP_ID = process.env.ROBLOX_GROUP_ID || "35995419";
+const GROUP_ID = process.env.ROBLOX_GROUP_ID;
 const GOAL = 24800;
 const SALES_CUTOFF_DATE = "2026-03-29T13:46:20.411Z";
 const TRANSFERS_CUTOFF_DATE = "2026-09-01T00:00:00.000Z";
@@ -209,14 +209,18 @@ async function main() {
     salesTransactions = loadManualTransactions();
   }
 
-  const transactions = [
-    ...filterByCutoff(salesTransactions, SALES_CUTOFF_DATE),
-    ...filterByCutoff(transferTransactions, TRANSFERS_CUTOFF_DATE),
-  ];
+  const salesFiltered = filterByCutoff(salesTransactions, SALES_CUTOFF_DATE);
+  const transfersFiltered = filterByCutoff(transferTransactions, TRANSFERS_CUTOFF_DATE);
 
-  const { totalRaised: donationsTotal, topDonators } = aggregate(transactions);
+  // leaderboard shows sales + transfers together, by person
+  const { topDonators } = aggregate([...salesFiltered, ...transfersFiltered]);
+
+  // the TOTAL only counts sales + balance/pending — transfers are left out of
+  // this sum since they land straight in the balance already being counted,
+  // so adding both would double-count the same Robux
+  const salesTotal = salesFiltered.reduce((sum, t) => sum + t.amount, 0);
   const accountBalance = availableRobux + pendingRobux;
-  const totalRaised = donationsTotal + accountBalance;
+  const totalRaised = salesTotal + accountBalance;
 
   const userIds = topDonators.map(d => d.userId);
   const [avatarByUserId, userInfoByUserId] = await Promise.all([
@@ -239,7 +243,7 @@ async function main() {
 
   const data = {
     totalRaised,
-    donationsTotal,
+    salesTotal,
     accountBalance,
     availableRobux,
     pendingRobux,
@@ -249,7 +253,7 @@ async function main() {
   };
 
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(data, null, 2));
-  console.log(`Wrote ${OUTPUT_PATH} — total raised: ${totalRaised} (donations: ${donationsTotal} + available: ${availableRobux} + pending: ${pendingRobux}) / ${GOAL}`);
+  console.log(`Wrote ${OUTPUT_PATH} — total raised: ${totalRaised} (sales: ${salesTotal} + available: ${availableRobux} + pending: ${pendingRobux}) / ${GOAL}`);
 }
 
 main().catch(err => {
