@@ -40,7 +40,10 @@ async function fetchGroupSales(cookie) {
       `?cursor=${encodeURIComponent(cursor)}&limit=100&transactionType=Sale`;
 
     const res = await fetch(url, { headers: { Cookie: `.ROBLOSECURITY=${cookie}` } });
-    if (!res.ok) throw new Error(`Roblox request failed: ${res.status} ${res.statusText}`);
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      throw new Error(`Roblox request failed: ${res.status} ${res.statusText} — ${body.slice(0, 300)}`);
+    }
 
     const json = await res.json();
     for (const row of json.data) {
