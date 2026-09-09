@@ -1,11 +1,11 @@
 {
-  "totalRaised": 8598,
-  "salesTotal": 1324,
+  "totalRaised": 8615,
+  "salesTotal": 1341,
   "accountBalance": 7274,
-  "availableRobux": 4702,
-  "pendingRobux": 2572,
+  "availableRobux": 4786,
+  "pendingRobux": 2488,
   "goal": 24800,
-  "lastUpdated": "2026-09-09T01:04:37.126Z",
+  "lastUpdated": "2026-09-09T05:39:40.718Z",
   "topDonators": [
     {
       "name": "C0MPP",
@@ -48,6 +48,13 @@
       "amount": 35,
       "userId": 3205399634,
       "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-BB1144029A4B31D547E5021A918A058E-Png/150/150/AvatarHeadshot/Png/isCircular"
+    },
+    {
+      "name": "P1xnet",
+      "displayName": "Planet",
+      "amount": 17,
+      "userId": 208100335,
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-6B15C4AF13C9E4B5021C331A863E9B29-Png/150/150/AvatarHeadshot/Png/isCircular"
     },
     {
       "name": "Bacaira",
