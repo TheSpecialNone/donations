@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const USE_LIVE_FETCH = true;
-const GROUP_ID = process.env.ROBLOX_GROUP_ID;
+const GROUP_ID = process.env.ROBLOX_GROUP_ID || "35995419";
 const GOAL = 24800;
 const SALES_CUTOFF_DATE = "2026-03-29T13:46:20.411Z";
 const TRANSFERS_CUTOFF_DATE = "2026-09-01T00:00:00.000Z";
