@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>spvcta.</title>
+<title>⧉ spvcta.</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l9 5v10l-9 5-9-5V7l9-5z' fill='none' stroke='%23c8963e' stroke-width='2.2'/%3E%3Cpath d='M12 2v20M3 7l9 5 9-5' fill='none' stroke='%23c8963e' stroke-width='1.6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -29,21 +29,50 @@ body {
   position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
   background: radial-gradient(circle at 50% 40%, #16130f 0%, var(--bg) 65%);
 }
-#atmosphere .glow {
-  position: absolute; border-radius: 50%;
-  background: radial-gradient(circle, rgba(200,150,62,var(--glow-o,0.16)) 0%, transparent 70%);
-  filter: blur(60px);
+#atmosphere .grid {
+  position: absolute; inset: -20%;
+  background-image:
+    linear-gradient(rgba(243,239,230,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243,239,230,0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  animation: grid-drift 70s linear infinite;
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 25%, black 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 25%, black 0%, transparent 78%);
 }
-#atmosphere .glow-a { width: 62vw; height: 62vw; top: -14%; right: -12%; --glow-o: 0.17; animation: drift-a 38s ease-in-out infinite; }
-#atmosphere .glow-b { width: 52vw; height: 52vw; bottom: -18%; left: -14%; --glow-o: 0.08; animation: drift-b 46s ease-in-out infinite; }
+@keyframes grid-drift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 64px 64px, 64px 64px; }
+}
+#atmosphere .glow {
+  position: absolute; border-radius: 50%; filter: blur(60px);
+}
+#atmosphere .glow-a {
+  width: 64vw; height: 64vw; top: -16%; right: -14%;
+  background: radial-gradient(circle, rgba(200,150,62,0.22) 0%, transparent 70%);
+  animation: drift-a 32s ease-in-out infinite;
+}
+#atmosphere .glow-b {
+  width: 54vw; height: 54vw; bottom: -18%; left: -16%;
+  background: radial-gradient(circle, rgba(90,150,150,0.12) 0%, transparent 70%);
+  animation: drift-b 40s ease-in-out infinite;
+}
+#atmosphere .glow-c {
+  width: 40vw; height: 40vw; top: 30%; left: 40%;
+  background: radial-gradient(circle, rgba(190,100,55,0.13) 0%, transparent 70%);
+  animation: drift-c 50s ease-in-out infinite;
+}
 @keyframes drift-a {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-7%, 9%) scale(1.1); }
-  66% { transform: translate(5%, -5%) scale(0.94); }
+  33% { transform: translate(-9%, 11%) scale(1.15); }
+  66% { transform: translate(6%, -6%) scale(0.92); }
 }
 @keyframes drift-b {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(9%, -7%) scale(1.12); }
+  50% { transform: translate(11%, -9%) scale(1.18); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate(-6%, -4%) scale(0.9); }
+  50% { transform: translate(8%, 10%) scale(1.2); }
 }
 #atmosphere::after {
   content: "";
@@ -149,12 +178,12 @@ footer {
 </head>
 <body>
 
-<div id="atmosphere"><div class="glow glow-a"></div><div class="glow glow-b"></div></div>
+<div id="atmosphere"><div class="grid"></div><div class="glow glow-a"></div><div class="glow glow-b"></div><div class="glow glow-c"></div></div>
 
 <div class="wrap">
 
 <header>
-  <div class="wordmark">spvcta<span class="dot">.</span></div>
+  <a class="wordmark" href="/">spvcta<span class="dot">.</span></a>
   <nav>
     <a href="https://www.roblox.com/users/902603595/profile" target="_blank" rel="noopener">roblox</a>
     <a href="/donations/">donate</a>
@@ -163,7 +192,7 @@ footer {
 
 <div class="hero">
   <div class="name">spvcta<span class="dot">.</span></div>
-  <p class="statement">I build Roblox games and passionately support Arsenal. Find the work below, or catch me on <a href="https://x.com/TheSpecialNone" target="_blank" rel="noopener">X</a> and <a href="https://github.com/TheSpecialNone" target="_blank" rel="noopener">GitHub</a>.</p>
+  <p class="statement">I build Roblox games, mostly in Lua. Sometimes JS or Python too. Work's below, or find me on <a href="https://x.com/TheSpecialNone" target="_blank" rel="noopener">X</a> and <a href="https://github.com/TheSpecialNone" target="_blank" rel="noopener">GitHub</a>.</p>
   <div class="role">Developer, Spec Interactive</div>
 </div>
 
