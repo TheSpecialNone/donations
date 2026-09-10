@@ -1,11 +1,11 @@
 {
-  "totalRaised": 8905,
+  "totalRaised": 8957,
   "salesTotal": 1341,
-  "accountBalance": 7564,
-  "availableRobux": 5442,
-  "pendingRobux": 2122,
+  "accountBalance": 7616,
+  "availableRobux": 6410,
+  "pendingRobux": 1206,
   "goal": 24800,
-  "lastUpdated": "2026-09-10T20:00:48.796Z",
+  "lastUpdated": "2026-09-10T22:33:46.498Z",
   "topDonators": [
     {
       "name": "C0MPP",
@@ -19,7 +19,7 @@
       "displayName": "pytee",
       "amount": 525,
       "userId": 1640204305,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-53AF31F27D2E7F75667AAE32BB43C242-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-8FCAAEABA29B40C7FA95E26D06F1E0D0-Png/150/150/AvatarHeadshot/Png/isCircular"
     },
     {
       "name": "voemz",
