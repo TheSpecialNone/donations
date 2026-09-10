@@ -3,766 +3,289 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⧉ donations.</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l9 5v10l-9 5-9-5V7l9-5z' fill='none' stroke='%23f4b942' stroke-width='2.2'/%3E%3Cpath d='M12 2v20M3 7l9 5 9-5' fill='none' stroke='%23f4b942' stroke-width='1.6'/%3E%3C/svg%3E">
+<title>spvcta. donations</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l9 5v10l-9 5-9-5V7l9-5z' fill='none' stroke='%23c8963e' stroke-width='2.2'/%3E%3Cpath d='M12 2v20M3 7l9 5 9-5' fill='none' stroke='%23c8963e' stroke-width='1.6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-    --bg: #0c0c0f;
-    --panel: #17171c;
-    --panel-light: #202027;
-    --line: #000000;
-    --text: #f2ede3;
-    --muted: #8f8f9a;
+  --bg: #0b0a09;
+  --fg: #f3efe6;
+  --muted: #948d80;
+  --line: #29261f;
+  --accent: #c8963e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Instrument Sans', sans-serif;
+  line-height: 1.5;
+  position: relative;
+}
 
-    --gold: #f4b942;
-    --gold-dark: #a97a1f;
-    --green: #5ec26a;
-    --cyan: #4dd0e1;
-    --purple: #b06bd6;
-    --red: #e0554c;
+#atmosphere {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  background: radial-gradient(circle at 50% 40%, #16130f 0%, var(--bg) 65%);
+}
+#atmosphere .glow {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,150,62,var(--glow-o,0.16)) 0%, transparent 70%);
+  filter: blur(60px);
+}
+#atmosphere .glow-a { width: 62vw; height: 62vw; top: -14%; right: -12%; --glow-o: 0.17; animation: drift-a 38s ease-in-out infinite; }
+#atmosphere .glow-b { width: 52vw; height: 52vw; bottom: -18%; left: -14%; --glow-o: 0.08; animation: drift-b 46s ease-in-out infinite; }
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-7%, 9%) scale(1.1); }
+  66% { transform: translate(5%, -5%) scale(0.94); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(9%, -7%) scale(1.12); }
+}
+#atmosphere::after {
+  content: "";
+  position: absolute; inset: -10%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05; mix-blend-mode: overlay;
+  animation: grain-drift 12s steps(2) infinite;
+}
+@keyframes grain-drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-1%, 1%); }
+}
 
-    --medal-gold: #f4b942;
-    --medal-silver: #c7c7d1;
-    --medal-bronze: #cd8a4d;
-  }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28px 0;
+  font-family: 'Space Mono', monospace; font-size: 0.8rem;
+}
+.wordmark .dot { color: var(--accent); }
+nav { display: flex; gap: 26px; color: var(--muted); }
+nav a { transition: color 0.2s ease; }
+nav a:hover { color: var(--fg); }
 
-  body {
-    background:
-      repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 3px),
-      radial-gradient(circle at 50% 0%, #1c1c22 0%, var(--bg) 55%);
-    color: var(--text);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    position: relative;
-    overflow-x: hidden;
-  }
-#scanlines {
-    position: fixed; inset: 0; z-index: 6; pointer-events: none;
-    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.28) 0px, rgba(0,0,0,0.28) 1px, transparent 1px, transparent 3px);
-    opacity: 0.12;
-    animation: scanline-drift 9s linear infinite;
-  }
-  @keyframes scanline-drift { from { background-position: 0 0; } to { background-position: 0 300px; } }
+.hero { padding: 64px 0 50px; }
+.hero .name {
+  font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
+  font-size: clamp(2.4rem, 8.5vw, 5rem); line-height: 0.96; letter-spacing: -0.02em;
+}
+.hero p { margin-top: 20px; color: var(--fg); font-size: 1rem; max-width: 42ch; }
 
-  body::after {
-    content: "";
-    position: fixed; inset: 0; z-index: 4; pointer-events: none;
-    background: radial-gradient(ellipse at 50% 40%, transparent 45%, rgba(0,0,0,0.5) 130%);
-  }
-#particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-  .spark {
-    position: absolute;
-    bottom: -20px;
-    width: 4px;
-    height: 4px;
-    background: var(--gold);
-    box-shadow: 0 0 6px 1px var(--gold);
-    animation: rise linear infinite;
-  }
-  @keyframes rise {
-    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateY(-110vh) translateX(var(--drift, 20px)) rotate(180deg); opacity: 0; }
-  }
-.pixel {
-    clip-path: polygon(
-      0 8px, 8px 8px, 8px 0,
-      calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
-      100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,
-      8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)
-    );
-  }
+section { padding: 50px 0; border-top: 1px solid var(--line); position: relative; z-index: 1; }
+.label { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 28px; }
 
-  .wrap { max-width: 1000px; margin: 0 auto; padding: 40px 20px 100px; position: relative; z-index: 1; }
-.hero { background: transparent; border: 4px solid var(--line); padding: 36px 30px; margin-bottom: 8px; text-align: center; position: relative; overflow: hidden; }
-@property --frame-angle {
-    syntax: '<angle>';
-    inherits: false;
-    initial-value: 0deg;
-  }
-  .hero::after, .tracker::after, .premium-note::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: conic-gradient(from var(--frame-angle), var(--gold-dark), var(--gold), #fff, var(--gold), var(--gold-dark));
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: frame-spin 4s linear infinite;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .hero::after { padding: 4px; }
-  .tracker::after { padding: 3px; }
-  .premium-note::after { padding: 3px; }
-  @keyframes frame-spin { to { --frame-angle: 360deg; } }
+.tracker-figure {
+  font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
+  font-size: clamp(3.4rem, 12vw, 6.5rem); line-height: 1; color: var(--accent);
+}
+.tracker-goal { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--muted); margin-top: 8px; }
+.tracker-goal span { color: var(--fg); }
+.tracker-bar { margin-top: 24px; height: 2px; background: var(--line); position: relative; }
+.tracker-bar-fill { position: absolute; top: 0; left: 0; height: 2px; background: var(--accent); transition: width 0.6s ease; }
+.tracker-meta { display: flex; justify-content: space-between; margin-top: 12px; font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+.tracker-note { margin-top: 20px; font-size: 0.85rem; color: var(--muted); font-style: italic; }
 
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 480px; height: 480px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(244,185,66,0.16) 0%, transparent 65%);
-    animation: hero-glow-pulse 4.5s ease-in-out infinite, hero-glow-hue 10s linear infinite;
-    pointer-events: none;
-  }
-  @keyframes hero-glow-pulse {
-    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.9); }
-    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
-  }
-  @keyframes hero-glow-hue { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
+.shop-row {
+  display: grid; grid-template-columns: 1fr auto auto;
+  align-items: baseline; gap: 16px; padding: 16px 0; border-top: 1px solid var(--line);
+  transition: opacity 0.15s ease;
+}
+.shop-row:first-of-type { border-top: none; }
+.shop-row:hover { opacity: 0.7; }
+.shop-row .amt { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; }
+.shop-row .amt.t-xs { font-size: 1.05rem; color: var(--muted); }
+.shop-row .amt.t-sm { font-size: 1.3rem; }
+.shop-row .amt.t-md { font-size: 1.7rem; }
+.shop-row .amt.t-lg { font-size: 2.2rem; }
+.shop-row .amt.t-xl { font-size: 2.9rem; color: var(--accent); }
+.shop-row .unit { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+.shop-row .arrow { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--muted); }
 
-  .hero > * { position: relative; z-index: 1; }
+.don-row { display: grid; grid-template-columns: 30px 36px 1fr auto; align-items: center; gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); }
+.don-row:first-of-type { border-top: none; }
+.don-row .rank { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--muted); }
+.don-row.r1 .rank { color: var(--accent); }
+.don-avatar, .don-avatar-fallback { width: 32px; height: 32px; border-radius: 50%; background: var(--line); display: flex; align-items: center; justify-content: center; object-fit: cover; }
+.don-avatar-fallback svg { width: 16px; height: 16px; color: var(--muted); }
+.don-row .name { font-size: 0.98rem; }
+.don-row.r1 .name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 1.3rem; }
+.don-row .handle { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+.don-row .amt { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
+.don-row.r1 .amt { color: var(--accent); font-size: 0.95rem; }
+.empty-state { color: var(--muted); font-size: 0.9rem; }
 
-  .hero .marquee {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--gold);
-    margin-bottom: 18px;
-    animation: flicker 4s linear infinite;
-  }
-  @keyframes flicker {
-    0%, 19%, 21%, 23%, 46%, 48%, 100% { opacity: 1; text-shadow: 0 0 8px var(--gold); }
-    20%, 22%, 47% { opacity: 0.4; text-shadow: none; }
-  }
+.profile-note { font-size: 0.92rem; color: var(--muted); display: flex; align-items: center; gap: 14px; }
+.profile-note img { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; }
+.profile-note a { color: var(--accent); border-bottom: 1px solid transparent; transition: border-color 0.2s ease; }
+.profile-note a:hover { border-color: var(--accent); }
 
-  .name-badge {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 1.6rem;
-    color: #fff;
-    background: linear-gradient(160deg, var(--gold) 0%, var(--gold-dark) 100%);
-    padding: 14px 26px;
-    border: 3px solid var(--line);
-    box-shadow: 5px 5px 0 0 #000;
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 18px;
-  }
-  .wave { display: inline-block; font-size: 1.5rem; animation: wave-bob 2.2s ease-in-out infinite; transform-origin: 70% 70%; }
-  @keyframes wave-bob {
-    0%, 100% { transform: rotate(0deg); }
-    15% { transform: rotate(18deg); }
-    30% { transform: rotate(-8deg); }
-    45% { transform: rotate(14deg); }
-    60% { transform: rotate(0deg); }
-  }
+footer { padding: 40px 0 60px; font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--muted); position: relative; z-index: 1; }
 
-  .hero p { color: var(--muted); max-width: 46ch; margin: 0 auto; font-size: 0.92rem; }
-
-  .hero-stats { display: flex; justify-content: center; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
-
-  .link-row { display: flex; justify-content: center; margin-top: 26px; }
-  .link-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'Press Start 2P', monospace; font-size: 0.55rem;
-    color: var(--text); background: var(--panel);
-    border: 3px solid var(--line); padding: 10px 16px;
-    text-decoration: none; box-shadow: 4px 4px 0 0 #000;
-    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
-  }
-  .link-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 #000; background: var(--panel-light); }
-  .stat-box {
-    background: rgba(0,0,0,0.5);
-    border: 3px solid var(--gold-dark);
-    padding: 10px 18px;
-    min-width: 130px;
-    position: relative;
-    clip-path: polygon(
-      0 6px, 6px 6px, 6px 0,
-      calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px,
-      100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%,
-      6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px)
-    );
-  }
-  .stat-box .val { animation: led-pulse 2.2s ease-in-out infinite; font-family: 'VT323', monospace; font-size: 2rem; color: var(--green); line-height: 1; }
-  @keyframes led-pulse {
-    0%, 100% { text-shadow: 0 0 6px currentColor; }
-    50% { text-shadow: 0 0 16px currentColor, 0 0 4px #fff; }
-  }
-  .stat-box .lbl { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--muted); margin-top: 6px; letter-spacing: 0.05em; }
-.section-label { display: flex; align-items: center; gap: 12px; margin: 56px 0 24px; }
-  .section-label .diamond {
-    width: 9px; height: 9px;
-    background: var(--gold);
-    transform: rotate(45deg);
-    box-shadow: 0 0 8px 1px rgba(244,185,66,0.6);
-    animation: diamond-spin 3s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-  @keyframes diamond-spin {
-    0%, 100% { transform: rotate(45deg) scale(1); }
-    50% { transform: rotate(225deg) scale(1.2); }
-  }
-  .section-label .tag { font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #000; background: var(--gold); padding: 8px 12px; border: 3px solid var(--line); }
-  .section-label .rule { flex: 1; height: 4px; background: repeating-linear-gradient(90deg, var(--panel-light) 0 8px, transparent 8px 16px); position: relative; overflow: visible; }
-  .section-label .rule-dot {
-    position: absolute; top: 50%; width: 6px; height: 6px;
-    background: var(--gold); border-radius: 50%;
-    box-shadow: 0 0 8px 2px rgba(244,185,66,0.8);
-    animation: rule-travel 3.6s linear infinite;
-  }
-  @keyframes rule-travel { 0% { left: 0%; transform: translateY(-50%); } 100% { left: calc(100% - 6px); transform: translateY(-50%); } }
-.tracker { background: var(--panel); border: 3px solid var(--line); box-shadow: 5px 5px 0 0 #000; padding: 24px 26px; position: relative; overflow: hidden; }
-  .tracker-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-  .tracker-top .raised { font-family: 'VT323', monospace; font-size: 2.6rem; color: var(--green); line-height: 1; }
-  .tracker-top .raised span { color: var(--muted); font-size: 1.4rem; }
-  .tracker-top .pct {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.85rem;
-    color: var(--gold);
-    background: #000;
-    border: 3px solid var(--line);
-    padding: 8px 12px;
-    animation: pct-glow 2.4s ease-in-out infinite;
-  }
-  @keyframes pct-glow {
-    0%, 100% { text-shadow: 0 0 4px rgba(244,185,66,0.4); }
-    50% { text-shadow: 0 0 14px rgba(244,185,66,0.9); }
-  }
-
-  .bar-outer { background: #000; border: 3px solid var(--line); height: 34px; padding: 3px; position: relative; }
-  .bar-inner {
-    height: 100%;
-    background-color: var(--green);
-    background-image: linear-gradient(45deg,
-      rgba(255,255,255,0.22) 25%, transparent 25%, transparent 50%,
-      rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.22) 75%, transparent 75%, transparent);
-    background-size: 28px 28px;
-    animation: bar-stripes 0.9s linear infinite;
-    position: relative;
-    transition: width 0.6s ease;
-    box-shadow: 0 0 14px 1px rgba(94,194,106,0.6);
-  }
-  @keyframes bar-stripes { from { background-position: 28px 0; } to { background-position: 0 0; } }
-  .bar-inner::after { content: ""; position: absolute; right: 0; top: 0; width: 6px; height: 100%; background: #fff; box-shadow: 0 0 10px 2px #fff; opacity: 0.85; }
-
-  .tracker-goal { display: flex; justify-content: space-between; margin-top: 10px; font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--muted); letter-spacing: 0.04em; }
-  .tracker-goal .goal-val { color: var(--gold); }
-  .tracker-updated { margin-top: 14px; font-size: 0.7rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-  .tracker-note { margin-top: 6px; font-size: 0.68rem; color: var(--muted); opacity: 0.75; font-style: italic; }
-  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px 1px var(--green); animation: dot-blink 1.1s steps(2) infinite; }
-  @keyframes dot-blink { 50% { opacity: 0.2; } }
-.leaderboard { display: flex; flex-direction: column; gap: 12px; }
-
-  .don-row {
-    background: var(--panel);
-    border: 3px solid var(--line);
-    box-shadow: 4px 4px 0 0 #000;
-    padding: 12px 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-  .don-row:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 #000; }
-
-  .don-rank {
-    font-family: 'VT323', monospace;
-    font-size: 1.15rem;
-    line-height: 1;
-    color: #000;
-    background: #4a4a52;
-    width: 30px;
-    height: 30px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-weight: 700;
-  }
-.don-row.rank-1, .don-row.rank-2, .don-row.rank-3 { padding: 18px 22px; }
-  .don-row.rank-1 .don-rank, .don-row.rank-2 .don-rank, .don-row.rank-3 .don-rank { width: 38px; height: 38px; font-size: 1.4rem; }
-
-  .don-row.rank-1::before, .don-row.rank-2::before, .don-row.rank-3::before {
-    content: "";
-    position: absolute;
-    top: 0; left: -75%;
-    width: 50%; height: 100%;
-    background: linear-gradient(115deg, transparent, rgba(255,255,255,0.14), transparent);
-    transform: skewX(-20deg);
-    animation: leaderboard-sweep 3.2s ease-in-out infinite;
-    pointer-events: none;
-  }
-  @keyframes leaderboard-sweep { 0% { left: -75%; } 45%, 100% { left: 130%; } }
-
-  .don-row.rank-1 {
-    border-color: var(--medal-gold);
-    background: linear-gradient(135deg, rgba(244,185,66,0.14), var(--panel) 65%);
-    box-shadow: 0 0 0 2px var(--medal-gold), 0 0 20px 0 rgba(244,185,66,0.35), 4px 4px 0 0 #000;
-    animation: rank1-glow 2.4s ease-in-out infinite;
-  }
-  @keyframes rank1-glow {
-    0%, 100% { box-shadow: 0 0 0 2px var(--medal-gold), 0 0 16px 0 rgba(244,185,66,0.3), 4px 4px 0 0 #000; }
-    50% { box-shadow: 0 0 0 2px var(--medal-gold), 0 0 32px 2px rgba(244,185,66,0.55), 4px 4px 0 0 #000; }
-  }
-  .don-row.rank-1 .don-rank { background: var(--medal-gold); }
-
-  .don-row.rank-2 {
-    border-color: var(--medal-silver);
-    background: linear-gradient(135deg, rgba(199,199,209,0.12), var(--panel) 65%);
-    box-shadow: 0 0 0 2px var(--medal-silver), 4px 4px 0 0 #000;
-  }
-  .don-row.rank-2 .don-rank { background: var(--medal-silver); }
-
-  .don-row.rank-3 {
-    border-color: var(--medal-bronze);
-    background: linear-gradient(135deg, rgba(205,138,77,0.12), var(--panel) 65%);
-    box-shadow: 0 0 0 2px var(--medal-bronze), 4px 4px 0 0 #000;
-  }
-  .don-row.rank-3 .don-rank { background: var(--medal-bronze); }
-.don-crown {
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    color: var(--gold);
-    filter: drop-shadow(0 0 6px rgba(244,185,66,0.8));
-    animation: crown-bob 2.4s ease-in-out infinite;
-  }
-  @keyframes crown-bob { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-3px) rotate(8deg); } }
-
-  .don-avatar-wrap { position: relative; flex-shrink: 0; }
-
-  .don-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #000;
-    border: 2px solid var(--line);
-    object-fit: cover;
-    display: block;
-  }
-  .don-avatar-fallback {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #000;
-    border: 2px solid var(--line);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gold);
-  }
-  .don-avatar-fallback svg { width: 20px; height: 20px; }
-
-  .don-row.rank-1 .don-avatar, .don-row.rank-1 .don-avatar-fallback { width: 56px; height: 56px; border-color: var(--medal-gold); border-width: 3px; }
-  .don-row.rank-2 .don-avatar, .don-row.rank-2 .don-avatar-fallback { width: 48px; height: 48px; border-color: var(--medal-silver); border-width: 3px; }
-  .don-row.rank-3 .don-avatar, .don-row.rank-3 .don-avatar-fallback { width: 48px; height: 48px; border-color: var(--medal-bronze); border-width: 3px; }
-  .don-row.rank-1 .don-avatar-fallback svg { width: 28px; height: 28px; }
-  .don-row.rank-2 .don-avatar-fallback svg, .don-row.rank-3 .don-avatar-fallback svg { width: 24px; height: 24px; }
-
-  .don-name { flex: 1; font-weight: 700; font-size: 1rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .don-row.rank-1 .don-name { font-size: 1.25rem; }
-  .don-row.rank-2 .don-name, .don-row.rank-3 .don-name { font-size: 1.1rem; }
-  .don-name .don-handle { font-weight: 500; color: var(--muted); font-size: 0.85rem; }
-
-  .don-amt { font-family: 'VT323', monospace; font-size: 1.5rem; color: var(--green); flex-shrink: 0; }
-  .don-row.rank-1 .don-amt { font-size: 2.1rem; color: var(--gold); text-shadow: 0 0 12px rgba(244,185,66,0.5); }
-  .don-row.rank-2 .don-amt, .don-row.rank-3 .don-amt { font-size: 1.8rem; }
-  .don-amt span { font-size: 0.9rem; color: var(--muted); }
-  .empty-state { color: var(--muted); font-size: 0.85rem; text-align: center; padding: 20px; }
-.shop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-
-  .card {
-    background: var(--panel);
-    border: 3px solid var(--line);
-    padding: 18px 16px;
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: var(--text);
-    box-shadow: 5px 5px 0 0 #000;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    position: relative;
-    overflow: hidden;
-    transform-style: preserve-3d;
-  }
-  .card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: -75%;
-    width: 50%; height: 100%;
-    background: linear-gradient(115deg, transparent, rgba(255,255,255,0.16), transparent);
-    transform: skewX(-20deg);
-    transition: left 0.55s ease;
-    pointer-events: none;
-  }
-  .card:hover::before { left: 130%; }
-  .card:hover { box-shadow: 9px 9px 0 0 #000; background: var(--panel-light); }
-  .card:active { transform: perspective(700px) scale(0.97) !important; box-shadow: 2px 2px 0 0 #000; }
-
-  .rarity-tag { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; letter-spacing: 0.05em; padding: 5px 8px; align-self: flex-start; margin-bottom: 14px; color: #000; }
-  .r-common .rarity-tag { background: #9c9ca6; }
-  .r-uncommon .rarity-tag { background: var(--green); }
-  .r-rare .rarity-tag { background: var(--cyan); }
-  .r-epic .rarity-tag { background: var(--purple); color: #fff; }
-  .r-legendary .rarity-tag { background: var(--gold); }
-
-  .r-common { border-color: #4a4a52; }
-  .r-uncommon { border-color: #2f6b3a; }
-  .r-uncommon:hover { box-shadow: 9px 9px 0 0 #000, 0 0 18px 0 rgba(94,194,106,0.3); }
-  .r-rare { border-color: #2b7f8c; }
-  .r-rare:hover { box-shadow: 9px 9px 0 0 #000, 0 0 18px 0 rgba(77,208,225,0.3); }
-  .r-epic { border-color: #6b3f85; }
-  .r-epic:hover { box-shadow: 9px 9px 0 0 #000, 0 0 18px 0 rgba(176,107,214,0.35); }
-  .r-legendary {
-    border-color: var(--gold-dark);
-    box-shadow: 0 0 0 2px var(--gold), 5px 5px 0 0 #000;
-    grid-column: span 2;
-    animation: legendary-pulse 2.2s ease-in-out infinite;
-  }
-  @keyframes legendary-pulse {
-    0%, 100% { box-shadow: 0 0 0 2px var(--gold), 0 0 14px 0 rgba(244,185,66,0.35), 5px 5px 0 0 #000; }
-    50% { box-shadow: 0 0 0 2px var(--gold), 0 0 34px 4px rgba(244,185,66,0.6), 5px 5px 0 0 #000; }
-  }
-  .r-legendary .coin-icon { animation: spin-coin 3.5s linear infinite; }
-  @keyframes spin-coin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
-
-  .coin-icon { width: 30px; height: 30px; margin-bottom: 10px; }
-  .card .amt { font-family: 'VT323', monospace; font-size: 2.4rem; line-height: 1; color: #fff; }
-  .r-legendary .amt { font-size: 3rem; color: var(--gold); }
-  .card .amt-lbl { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
-  .card .buy { margin-top: auto; padding-top: 16px; font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--green); display: flex; align-items: center; gap: 6px; }
-  .card .buy svg { width: 12px; height: 12px; }
-@keyframes profile-glow {
-    0%, 100% { box-shadow: 0 0 0 2px var(--gold-dark), 0 0 14px 0 rgba(244,185,66,0.3), 5px 5px 0 0 #000; }
-    50% { box-shadow: 0 0 0 2px var(--gold-dark), 0 0 28px 3px rgba(244,185,66,0.55), 5px 5px 0 0 #000; }
-  }
-  @keyframes btn-sweep { 0% { left: -75%; } 50%, 100% { left: 130%; } }
-
-  .premium-note {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-top: 40px;
-    background: var(--panel);
-    border: 3px solid var(--gold-dark);
-    box-shadow: 0 0 0 2px var(--gold-dark), 5px 5px 0 0 #000;
-    padding: 16px 20px;
-    text-decoration: none;
-    color: var(--text);
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
-    position: relative;
-    overflow: hidden;
-    animation: profile-glow 2.6s ease-in-out infinite;
-  }
-  .premium-note::before {
-    content: "";
-    position: absolute;
-    top: 0; left: -75%;
-    width: 50%; height: 100%;
-    background: linear-gradient(115deg, transparent, rgba(255,255,255,0.16), transparent);
-    transform: skewX(-20deg);
-    animation: btn-sweep 2.6s ease-in-out infinite;
-  }
-  .premium-note:hover { transform: translate(-3px, -3px); box-shadow: 0 0 0 2px var(--gold), 8px 8px 0 0 #000; background: var(--panel-light); }
-  .premium-note:active { transform: translate(0, 0); box-shadow: 2px 2px 0 0 #000; }
-
-  .premium-icon { width: 46px; height: 46px; flex-shrink: 0; filter: drop-shadow(2px 2px 0 #000); animation: spin-coin 3.5s linear infinite; }
-  .premium-text { flex: 1; min-width: 0; }
-  .premium-title { font-family: 'Press Start 2P', monospace; font-size: 0.62rem; color: var(--gold); letter-spacing: 0.04em; margin-bottom: 6px; }
-  .premium-sub { font-size: 0.82rem; color: var(--muted); }
-
-  footer { margin-top: 72px; font-size: 0.75rem; color: var(--muted); border-top: 2px dashed #333; padding-top: 20px; text-align: center; }
-  footer a { color: var(--gold); }
-
-  @media (max-width: 720px) {
-    .name-badge { font-size: 1.1rem; flex-wrap: wrap; justify-content: center; }
-    .shop { grid-template-columns: repeat(2, 1fr); }
-    .r-legendary { grid-column: span 2; }
-    .don-row.rank-1 .don-name { font-size: 1.05rem; }
-  }
+@media (max-width: 560px) {
+  .shop-row { grid-template-columns: 1fr auto; }
+  .shop-row .arrow { display: none; }
+}
 </style>
 </head>
 <body>
 
-<div id="particles"></div>
-<div id="scanlines"></div>
+<div id="atmosphere"><div class="glow glow-a"></div><div class="glow glow-b"></div></div>
 
 <div class="wrap">
-<div class="hero pixel">
-    <div class="marquee">★ SUPPORT ME ★</div>
-    <h1 class="name-badge">spvcta <span class="wave">👋</span></h1>
-    <p>Pick and purchase a gamepass, big or small, to support my cause. Any amount donated is very appreciated!</p>
-    <div class="hero-stats">
-      <div class="stat-box">
-        <div class="val">10</div>
-        <div class="lbl">TIERS</div>
-      </div>
-      <div class="stat-box">
-        <div class="val">70%</div>
-        <div class="lbl">TO ME</div>
-      </div>
-    </div>
-    <div class="link-row">
-      <a class="link-btn" href="/">← Back to spvcta</a>
-    </div>
+
+<header>
+  <div class="wordmark">spvcta<span class="dot">.</span></div>
+  <nav>
+    <a href="/">index</a>
+    <a href="https://www.roblox.com/users/902603595/profile" target="_blank" rel="noopener">roblox</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="name">support<br>me.</div>
+  <p>Pick a gamepass, big or small. Any amount donated is genuinely appreciated.</p>
+</div>
+
+<section class="tracker">
+  <div class="label">// goal tracker</div>
+  <div class="tracker-figure" id="tracker-raised">—</div>
+  <div class="tracker-goal">of <span id="tracker-goal">— R$</span> goal</div>
+  <div class="tracker-bar"><div class="tracker-bar-fill" id="tracker-bar" style="width:0%"></div></div>
+  <div class="tracker-meta">
+    <span id="tracker-pct">—%</span>
+    <span id="tracker-updated">loading…</span>
   </div>
-<div class="section-label">
-    <span class="diamond"></span>
-    <span class="tag">GOAL TRACKER</span>
-    <div class="rule"><span class="rule-dot"></span></div>
+  <div class="tracker-note">This number also includes some of my own personal savings, not just donations. The leaderboard below only counts real donations, gamepass sales and direct Robux transfers.</div>
+</section>
+
+<section class="shop">
+  <div class="label">// item shop</div>
+  <a class="shop-row" href="https://www.roblox.com/game-pass/1772896792" target="_blank" rel="noopener"><span class="amt t-xs">5</span><span class="unit">ROBUX</span><span class="arrow">↗</span></a>
+  <a class="shop-row" href="https://www.roblox.com/game-pass/1968282469" target="_blank" rel="noopener"><span class="amt t-xs">10</span><span class="unit">ROBUX</span><span class="arrow">↗</span></a>
+  <a class="shop-row" href="https://www.roblox.com/game-pass/1966392750" target="_blank" rel="noopener"><span class="amt t-sm">25</span><span class="unit">ROBUX</span><span class="arrow">↗</span></a>
+  <a class="shop-row" href="https://www.roblox.com/game-pass/1964582193" target="_blank" rel="noopener"><span class="amt t-sm">50</span><span class="unit">ROBUX</span><span class="arrow">↗</span></a>
+  <a class="shop-row" href="https://www.roblox.com/game-pass/1967364712" target="_blank" rel="noopener"><span class="amt t-md">100</span><span class="unit">ROBUX</span><span class="arrow">↗</span></a>
+  <a class="shop-row" href="https://www.roblox.com/game-pass/1961996267" target="_blank" rel="noopener"><span class="amt t-md">250</span><span class="unit">ROBUX</span><span class="arrow">↗</span></a>
+  <a class="shop-row" href="https://www.roblox.com/game-pass/1963664204" target="_blank" rel="noopener"><span class="amt t-lg">500</span><span class="unit">ROBUX</span><span class="arrow">↗</span></a>
+  <a class="shop-row" href="https://www.roblox.com/game-pass/1967916519" target="_blank" rel="noopener"><span class="amt t-lg">1,000</span><span class="unit">ROBUX</span><span class="arrow">↗</span></a>
+  <a class="shop-row" href="https://www.roblox.com/game-pass/1962080209" target="_blank" rel="noopener"><span class="amt t-xl">2,500</span><span class="unit">ROBUX</span><span class="arrow">↗</span></a>
+  <a class="shop-row" href="https://www.roblox.com/game-pass/1962284185" target="_blank" rel="noopener"><span class="amt t-xl">10,000</span><span class="unit">ROBUX</span><span class="arrow">↗</span></a>
+</section>
+
+<section class="leaderboard-section">
+  <div class="label">// top donators</div>
+  <div id="leaderboard"><div class="empty-state">Loading…</div></div>
+</section>
+
+<section class="profile">
+  <div class="label">// roblox plus</div>
+  <div class="profile-note">
+    <img src="https://tr.rbxcdn.com/180DAY-3aed82b14905b5d2bea1933175c33b17/420/420/Hat/Webp/noFilter" alt="">
+    <span>You can also donate directly through my <a href="https://www.roblox.com/users/902603595/profile" target="_blank" rel="noopener">Roblox profile</a>.</span>
   </div>
+</section>
 
-  <div class="tracker pixel">
-    <div class="tracker-top">
-      <div class="raised" id="tracker-raised">-- <span>/ -- R$</span></div>
-      <div class="pct" id="tracker-pct">--%</div>
-    </div>
-    <div class="bar-outer">
-      <div class="bar-inner" id="tracker-bar" style="width: 0%;"></div>
-    </div>
-    <div class="tracker-goal">
-      <span>0 R$</span>
-      <span class="goal-val" id="tracker-goal-lbl">GOAL: -- R$</span>
-    </div>
-    <div class="tracker-updated"><span class="live-dot"></span> <span id="tracker-updated-text">loading…</span></div>
-    <div class="tracker-note">this number also includes my own personal savings</div>
-  </div>
-<div class="section-label">
-    <span class="diamond"></span>
-    <span class="tag">ITEM SHOP</span>
-    <div class="rule"><span class="rule-dot"></span></div>
-  </div>
-
-  <div class="shop">
-
-    <a class="card r-common" href="https://www.roblox.com/game-pass/1772896792" target="_blank" rel="noopener">
-      <span class="rarity-tag">COMMON</span>
-      <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 2v20M3 7l9 5 9-5"/></svg>
-      <div class="amt">5</div>
-      <div class="amt-lbl">Robux</div>
-      <span class="buy">BUY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-
-    <a class="card r-common" href="https://www.roblox.com/game-pass/1968282469" target="_blank" rel="noopener">
-      <span class="rarity-tag">COMMON</span>
-      <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 2v20M3 7l9 5 9-5"/></svg>
-      <div class="amt">10</div>
-      <div class="amt-lbl">Robux</div>
-      <span class="buy">BUY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-
-    <a class="card r-common" href="https://www.roblox.com/game-pass/1966392750" target="_blank" rel="noopener">
-      <span class="rarity-tag">COMMON</span>
-      <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 2v20M3 7l9 5 9-5"/></svg>
-      <div class="amt">25</div>
-      <div class="amt-lbl">Robux</div>
-      <span class="buy">BUY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-
-    <a class="card r-uncommon" href="https://www.roblox.com/game-pass/1964582193" target="_blank" rel="noopener">
-      <span class="rarity-tag">UNCOMMON</span>
-      <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 2v20M3 7l9 5 9-5"/></svg>
-      <div class="amt">50</div>
-      <div class="amt-lbl">Robux</div>
-      <span class="buy">BUY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-
-    <a class="card r-uncommon" href="https://www.roblox.com/game-pass/1967364712" target="_blank" rel="noopener">
-      <span class="rarity-tag">UNCOMMON</span>
-      <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 2v20M3 7l9 5 9-5"/></svg>
-      <div class="amt">100</div>
-      <div class="amt-lbl">Robux</div>
-      <span class="buy">BUY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-
-    <a class="card r-rare" href="https://www.roblox.com/game-pass/1961996267" target="_blank" rel="noopener">
-      <span class="rarity-tag">RARE</span>
-      <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 2v20M3 7l9 5 9-5"/></svg>
-      <div class="amt">250</div>
-      <div class="amt-lbl">Robux</div>
-      <span class="buy">BUY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-
-    <a class="card r-rare" href="https://www.roblox.com/game-pass/1963664204" target="_blank" rel="noopener">
-      <span class="rarity-tag">RARE</span>
-      <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 2v20M3 7l9 5 9-5"/></svg>
-      <div class="amt">500</div>
-      <div class="amt-lbl">Robux</div>
-      <span class="buy">BUY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-
-    <a class="card r-epic" href="https://www.roblox.com/game-pass/1967916519" target="_blank" rel="noopener">
-      <span class="rarity-tag">EPIC</span>
-      <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 2v20M3 7l9 5 9-5"/></svg>
-      <div class="amt">1,000</div>
-      <div class="amt-lbl">Robux</div>
-      <span class="buy">BUY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-
-    <a class="card r-epic" href="https://www.roblox.com/game-pass/1962080209" target="_blank" rel="noopener">
-      <span class="rarity-tag">EPIC</span>
-      <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 2v20M3 7l9 5 9-5"/></svg>
-      <div class="amt">2,500</div>
-      <div class="amt-lbl">Robux</div>
-      <span class="buy">BUY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-
-    <a class="card r-legendary" href="https://www.roblox.com/game-pass/1962284185" target="_blank" rel="noopener">
-      <span class="rarity-tag">★ LEGENDARY ★</span>
-      <svg class="coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 2v20M3 7l9 5 9-5"/></svg>
-      <div class="amt">10,000</div>
-      <div class="amt-lbl">Robux</div>
-      <span class="buy">BUY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-
-  </div>
-<div class="section-label">
-    <span class="diamond"></span>
-    <span class="tag">TOP DONATORS</span>
-    <div class="rule"><span class="rule-dot"></span></div>
-  </div>
-
-  <div class="leaderboard pixel" id="leaderboard">
-    <div class="empty-state">Loading…</div>
-  </div>
-
-  <a class="premium-note pixel" href="https://www.roblox.com/users/902603595/profile" target="_blank" rel="noopener">
-    <img class="premium-icon" src="https://tr.rbxcdn.com/180DAY-3aed82b14905b5d2bea1933175c33b17/420/420/Hat/Webp/noFilter" alt="Roblox Premium">
-    <div class="premium-text">
-      <div class="premium-title">HAVE ROBLOX PLUS?</div>
-      <div class="premium-sub">You can also donate directly through my profile</div>
-    </div>
-  </a>
-
-  <footer>
-    All purchases are handled directly through Roblox. This page does not process or store payments.
-  </footer>
+<footer>All purchases are handled directly through Roblox. This page does not process or store payments.</footer>
 
 </div>
 
 <script>
-  const DATA_URL = "./donations.json";
-  const REFRESH_MS = 5 * 60 * 1000;
+const DATA_URL = "./donations.json";
+const REFRESH_MS = 5 * 60 * 1000;
 
-  const AVATAR_FALLBACK_SVG = `
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-      <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/>
-    </svg>`;
+const AVATAR_FALLBACK_SVG = `
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+    <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/>
+  </svg>`;
 
-  const CROWN_SVG = `
-    <svg class="don-crown" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8z"/>
-    </svg>`;
+function fmtTimeAgo(iso) {
+  const diffMs = Date.now() - new Date(iso).getTime();
+  const mins = Math.round(diffMs / 60000);
+  if (mins < 1) return "updated just now";
+  if (mins < 60) return "updated " + mins + "m ago";
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return "updated " + hrs + "h ago";
+  return "updated " + Math.round(hrs / 24) + "d ago";
+}
 
-  function fmtTimeAgo(iso) {
-    const diffMs = Date.now() - new Date(iso).getTime();
-    const mins = Math.round(diffMs / 60000);
-    if (mins < 1) return "updated just now";
-    if (mins < 60) return "updated " + mins + "m ago";
-    const hrs = Math.round(mins / 60);
-    if (hrs < 24) return "updated " + hrs + "h ago";
-    return "updated " + Math.round(hrs / 24) + "d ago";
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function handleAvatarError(img) {
+  const fallback = document.createElement("div");
+  fallback.className = "don-avatar-fallback";
+  fallback.innerHTML = AVATAR_FALLBACK_SVG;
+  img.replaceWith(fallback);
+}
+
+function renderTracker(data) {
+  const raised = data.totalRaised || 0;
+  const goal = data.goal || 1;
+  const pct = Math.max(0, Math.min(100, (raised / goal) * 100));
+
+  document.getElementById("tracker-raised").textContent = raised.toLocaleString();
+  document.getElementById("tracker-goal").textContent = goal.toLocaleString() + " R$";
+  document.getElementById("tracker-bar").style.width = pct + "%";
+  document.getElementById("tracker-pct").textContent = pct.toFixed(1) + "%";
+  document.getElementById("tracker-updated").textContent =
+    data.lastUpdated ? fmtTimeAgo(data.lastUpdated) : "no update timestamp";
+}
+
+function renderLeaderboard(data) {
+  const board = document.getElementById("leaderboard");
+  const donors = (data.topDonators || []).slice().sort((a, b) => b.amount - a.amount);
+
+  if (!donors.length) {
+    board.innerHTML = '<div class="empty-state">No donations recorded yet.</div>';
+    return;
   }
 
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  board.innerHTML = donors.slice(0, 10).map((d, i) => {
+    const rank = i + 1;
+    const rowClass = rank === 1 ? " r1" : "";
+    const handle = d.displayName && d.displayName !== d.name
+      ? ` <span class="handle">(@${escapeHtml(d.displayName)})</span>`
+      : "";
+    const avatar = d.avatarUrl
+      ? `<img class="don-avatar" src="${d.avatarUrl}" alt="" data-fallback="1">`
+      : `<div class="don-avatar-fallback">${AVATAR_FALLBACK_SVG}</div>`;
+
+    return `
+      <div class="don-row${rowClass}">
+        <span class="rank">${String(rank).padStart(2, "0")}</span>
+        ${avatar}
+        <span class="name">${escapeHtml(d.name)}${handle}</span>
+        <span class="amt">${d.amount.toLocaleString()} R$</span>
+      </div>`;
+  }).join("");
+
+  board.querySelectorAll("img[data-fallback]").forEach(img => {
+    img.addEventListener("error", () => handleAvatarError(img), { once: true });
+  });
+}
+
+async function loadData() {
+  try {
+    const res = await fetch(DATA_URL + "?t=" + Date.now());
+    if (!res.ok) throw new Error("fetch failed: " + res.status);
+    const data = await res.json();
+    renderTracker(data);
+    renderLeaderboard(data);
+  } catch (err) {
+    console.error("Failed to load donation data", err);
+    document.getElementById("tracker-updated").textContent = "couldn't load data";
   }
+}
 
-  function renderTracker(data) {
-    const raised = data.totalRaised || 0;
-    const goal = data.goal || 1;
-    const pct = Math.max(0, Math.min(100, (raised / goal) * 100));
-
-    document.getElementById("tracker-raised").innerHTML =
-      raised.toLocaleString() + ' <span>/ ' + goal.toLocaleString() + ' R$</span>';
-    document.getElementById("tracker-pct").textContent = pct.toFixed(1) + "%";
-    document.getElementById("tracker-bar").style.width = pct + "%";
-    document.getElementById("tracker-goal-lbl").textContent = "GOAL: " + goal.toLocaleString() + " R$";
-    document.getElementById("tracker-updated-text").textContent =
-      data.lastUpdated ? fmtTimeAgo(data.lastUpdated) : "no update timestamp";
-  }
-
-  function renderLeaderboard(data) {
-    const board = document.getElementById("leaderboard");
-    const donors = (data.topDonators || []).slice().sort((a, b) => b.amount - a.amount);
-
-    if (!donors.length) {
-      board.innerHTML = '<div class="empty-state">No donations recorded yet.</div>';
-      return;
-    }
-
-    board.innerHTML = donors.slice(0, 10).map((d, i) => {
-      const rank = i + 1;
-      const rankClass = rank <= 3 ? ` rank-${rank}` : "";
-      const crown = rank === 1 ? CROWN_SVG : "";
-      const handle = d.displayName && d.displayName !== d.name
-        ? ` <span class="don-handle">(@${escapeHtml(d.displayName)})</span>`
-        : "";
-      const avatarInner = d.avatarUrl
-        ? `<img class="don-avatar" src="${d.avatarUrl}" alt="${escapeHtml(d.name)}'s avatar"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-           <div class="don-avatar-fallback" style="display:none">${AVATAR_FALLBACK_SVG}</div>`
-        : `<div class="don-avatar-fallback">${AVATAR_FALLBACK_SVG}</div>`;
-
-      return `
-        <div class="don-row${rankClass}">
-          <div class="don-rank">${rank}</div>
-          <div class="don-avatar-wrap">${crown}${avatarInner}</div>
-          <div class="don-name">${escapeHtml(d.name)}${handle}</div>
-          <div class="don-amt">${d.amount.toLocaleString()} <span>R$</span></div>
-        </div>`;
-    }).join("");
-  }
-
-  async function loadData() {
-    try {
-      const res = await fetch(DATA_URL + "?t=" + Date.now());
-      if (!res.ok) throw new Error("fetch failed: " + res.status);
-      const data = await res.json();
-      renderTracker(data);
-      renderLeaderboard(data);
-    } catch (err) {
-      console.error("Failed to load donation data", err);
-      document.getElementById("tracker-updated-text").textContent = "couldn't load data";
-    }
-  }
-
-  loadData();
-  setInterval(loadData, REFRESH_MS);
-
-  function spawnParticles() {
-    const field = document.getElementById("particles");
-    const count = 26;
-    for (let i = 0; i < count; i++) {
-      const s = document.createElement("div");
-      s.className = "spark";
-      s.style.left = Math.random() * 100 + "vw";
-      s.style.setProperty("--drift", (Math.random() * 80 - 40) + "px");
-      const duration = 6 + Math.random() * 8;
-      s.style.animationDuration = duration + "s";
-      s.style.animationDelay = -(Math.random() * duration) + "s";
-      s.style.opacity = 0.4 + Math.random() * 0.6;
-      const size = 2 + Math.random() * 3;
-      s.style.width = size + "px";
-      s.style.height = size + "px";
-      field.appendChild(s);
-    }
-  }
-  spawnParticles();
-
-  function initCardTilt() {
-    document.querySelectorAll(".shop .card").forEach(card => {
-      card.addEventListener("mousemove", e => {
-        const rect = card.getBoundingClientRect();
-        const px = (e.clientX - rect.left) / rect.width - 0.5;
-        const py = (e.clientY - rect.top) / rect.height - 0.5;
-        card.style.transform = `perspective(700px) rotateX(${py * -14}deg) rotateY(${px * 14}deg) translateZ(8px)`;
-      });
-      card.addEventListener("mouseleave", () => { card.style.transform = ""; });
-    });
-  }
-  initCardTilt();
+loadData();
+setInterval(loadData, REFRESH_MS);
 </script>
 
 </body>
