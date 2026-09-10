@@ -8,8 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* ===================== THEME / BASE ===================== */
-  :root {
+:root {
     --bg: #0c0c0f;
     --panel: #17171c;
     --panel-light: #202027;
@@ -73,9 +72,7 @@
   }
 
   .wrap { max-width: 900px; margin: 0 auto; padding: 40px 20px 100px; position: relative; z-index: 1; }
-
-  /* ===================== HERO ===================== */
-  .hero { background: transparent; border: 4px solid var(--line); padding: 40px 30px; margin-bottom: 8px; text-align: center; position: relative; overflow: hidden; }
+.hero { background: transparent; border: 4px solid var(--line); padding: 40px 30px; margin-bottom: 8px; text-align: center; position: relative; overflow: hidden; }
 
   .hero::before {
     content: "";
@@ -160,9 +157,7 @@
   .link-btn svg { width: 14px; height: 14px; }
   .donate-btn { background: var(--gold); color: #000; border-color: var(--gold-dark); }
   .donate-btn:hover { background: #ffcb5c; }
-
-  /* ===================== SECTION LABELS ===================== */
-  .section-label { display: flex; align-items: center; gap: 12px; margin: 56px 0 24px; }
+.section-label { display: flex; align-items: center; gap: 12px; margin: 56px 0 24px; }
   .section-label .diamond {
     width: 9px; height: 9px; background: var(--gold); transform: rotate(45deg);
     box-shadow: 0 0 8px 1px rgba(244,185,66,0.6);
@@ -179,24 +174,18 @@
     box-shadow: 0 0 8px 2px rgba(244,185,66,0.8); animation: rule-travel 3.6s linear infinite;
   }
   @keyframes rule-travel { 0% { left: 0%; transform: translateY(-50%); } 100% { left: calc(100% - 6px); transform: translateY(-50%); } }
-
-  /* ===================== BIO ===================== */
-  .bio-panel { background: var(--panel); border: 3px solid var(--line); box-shadow: 5px 5px 0 0 #000; padding: 24px 26px; }
+.bio-panel { background: var(--panel); border: 3px solid var(--line); box-shadow: 5px 5px 0 0 #000; padding: 24px 26px; }
   .bio-panel p { line-height: 1.7; font-size: 0.95rem; max-width: 62ch; }
   .bio-panel p + p { margin-top: 14px; }
   .bio-panel a { color: var(--gold); }
-
-  /* ===================== WHAT I'M INTO ===================== */
-  .focus-list { display: flex; flex-direction: column; gap: 10px; }
+.focus-list { display: flex; flex-direction: column; gap: 10px; }
   .focus-row {
     background: var(--panel); border: 3px solid var(--line); box-shadow: 4px 4px 0 0 #000;
     padding: 14px 18px; display: flex; align-items: center; gap: 14px;
   }
   .focus-row .bullet { width: 8px; height: 8px; background: var(--green); flex-shrink: 0; transform: rotate(45deg); }
   .focus-row span { font-size: 0.92rem; }
-
-  /* ===================== PROJECTS ===================== */
-  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 
   .proj-card {
     background: var(--panel); border: 3px solid #4a4a52; padding: 20px;
@@ -228,18 +217,14 @@
   .proj-card.featured .proj-tag { color: #000; background: var(--gold); padding: 4px 8px; align-self: flex-start; }
   .proj-name { font-weight: 700; font-size: 1.05rem; }
   .proj-desc { color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
-
-  /* ===================== SKILLS ===================== */
-  .skill-group { margin-bottom: 18px; }
+.skill-group { margin-bottom: 18px; }
   .skill-group h4 { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--muted); margin-bottom: 10px; font-weight: 400; }
   .skill-chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .skill-chip {
     font-size: 0.8rem; color: var(--text); background: var(--panel);
     border: 2px solid var(--line); padding: 6px 12px; box-shadow: 3px 3px 0 0 #000;
   }
-
-  /* ===================== STATS ===================== */
-  .stats-panel { background: var(--panel); border: 3px solid var(--line); box-shadow: 5px 5px 0 0 #000; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.stats-panel { background: var(--panel); border: 3px solid var(--line); box-shadow: 5px 5px 0 0 #000; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
   .stats-panel img { max-width: 100%; height: auto; }
 
   footer { margin-top: 72px; font-size: 0.75rem; color: var(--muted); border-top: 2px dashed #333; padding-top: 20px; text-align: center; }
@@ -395,7 +380,6 @@
 </div>
 
 <script>
-  // background sparks
   function spawnParticles() {
     const field = document.getElementById("particles");
     const count = 22;
@@ -416,7 +400,6 @@
   }
   spawnParticles();
 
-  // project card cursor tilt
   function initCardTilt() {
     document.querySelectorAll(".proj-card").forEach(card => {
       card.addEventListener("mousemove", e => {
