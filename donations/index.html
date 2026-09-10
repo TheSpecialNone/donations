@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⧉ donations.</title>
+<title>SPVCTA - Donations</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l9 5v10l-9 5-9-5V7l9-5z' fill='none' stroke='%23f4b942' stroke-width='2.2'/%3E%3Cpath d='M12 2v20M3 7l9 5 9-5' fill='none' stroke='%23f4b942' stroke-width='1.6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -132,21 +132,27 @@
     20%, 22%, 47% { opacity: 0.4; text-shadow: none; }
   }
 
-  .hero h1 {
+  .name-badge {
     font-family: 'Press Start 2P', monospace;
-    font-size: 2.4rem;
+    font-size: 1.6rem;
     color: #fff;
-    letter-spacing: 0.04em;
-    margin-bottom: 22px;
-    display: inline-block;
-    position: relative;
     background: linear-gradient(160deg, var(--gold) 0%, var(--gold-dark) 100%);
-    padding: 14px 30px;
+    padding: 14px 26px;
     border: 3px solid var(--line);
     box-shadow: 5px 5px 0 0 #000;
-    animation: title-bob 2.4s ease-in-out infinite;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
   }
-  @keyframes title-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  .wave { display: inline-block; font-size: 1.5rem; animation: wave-bob 2.2s ease-in-out infinite; transform-origin: 70% 70%; }
+  @keyframes wave-bob {
+    0%, 100% { transform: rotate(0deg); }
+    15% { transform: rotate(18deg); }
+    30% { transform: rotate(-8deg); }
+    45% { transform: rotate(14deg); }
+    60% { transform: rotate(0deg); }
+  }
 
   .hero p { color: var(--muted); max-width: 46ch; margin: 0 auto; font-size: 0.92rem; }
 
@@ -470,7 +476,7 @@
   footer a { color: var(--gold); }
 
   @media (max-width: 720px) {
-    .hero h1 { font-size: 1.5rem; }
+    .name-badge { font-size: 1.1rem; flex-wrap: wrap; justify-content: center; }
     .shop { grid-template-columns: repeat(2, 1fr); }
     .r-legendary { grid-column: span 2; }
     .don-row.rank-1 .don-name { font-size: 1.05rem; }
@@ -485,7 +491,7 @@
 <div class="wrap">
 <div class="hero pixel">
     <div class="marquee">★ SUPPORT ME ★</div>
-    <h1>SPVCTA</h1>
+    <h1 class="name-badge">spvcta <span class="wave">👋</span></h1>
     <p>Pick and purchase a gamepass, big or small, to support my cause. Any amount donated is very appreciated!</p>
     <div class="hero-stats">
       <div class="stat-box">
@@ -520,7 +526,7 @@
       <span class="goal-val" id="tracker-goal-lbl">GOAL: -- R$</span>
     </div>
     <div class="tracker-updated"><span class="live-dot"></span> <span id="tracker-updated-text">loading…</span></div>
-    <div class="tracker-note">total = gamepass sales + my current & pending Robux — leaderboard also credits direct Robux transfers</div>
+    <div class="tracker-note">total = gamepass sales + my current & pending Robux, leaderboard also credits direct Robux transfers</div>
   </div>
 <div class="section-label">
     <span class="diamond"></span>
