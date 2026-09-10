@@ -8,8 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* ===================== THEME / BASE ===================== */
-  :root {
+:root {
     --bg: #0c0c0f;
     --panel: #17171c;
     --panel-light: #202027;
@@ -41,9 +40,7 @@
     position: relative;
     overflow-x: hidden;
   }
-
-  /* CRT-style scanlines + edge vignette, sitting above everything for atmosphere */
-  #scanlines {
+#scanlines {
     position: fixed; inset: 0; z-index: 6; pointer-events: none;
     background: repeating-linear-gradient(0deg, rgba(0,0,0,0.28) 0px, rgba(0,0,0,0.28) 1px, transparent 1px, transparent 3px);
     opacity: 0.12;
@@ -56,9 +53,7 @@
     position: fixed; inset: 0; z-index: 4; pointer-events: none;
     background: radial-gradient(ellipse at 50% 40%, transparent 45%, rgba(0,0,0,0.5) 130%);
   }
-
-  /* floating ember/spark background particles behind everything */
-  #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+#particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
   .spark {
     position: absolute;
     bottom: -20px;
@@ -74,9 +69,7 @@
     90% { opacity: 1; }
     100% { transform: translateY(-110vh) translateX(var(--drift, 20px)) rotate(180deg); opacity: 0; }
   }
-
-  /* notched pixel-art corner effect, reused on most panels */
-  .pixel {
+.pixel {
     clip-path: polygon(
       0 8px, 8px 8px, 8px 0,
       calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
@@ -86,12 +79,8 @@
   }
 
   .wrap { max-width: 1000px; margin: 0 auto; padding: 40px 20px 100px; position: relative; z-index: 1; }
-
-  /* ===================== HERO ===================== */
-  .hero { background: transparent; border: 4px solid var(--line); padding: 36px 30px; margin-bottom: 8px; text-align: center; position: relative; overflow: hidden; }
-
-  /* animated rotating frame, masked to the border band */
-  @property --frame-angle {
+.hero { background: transparent; border: 4px solid var(--line); padding: 36px 30px; margin-bottom: 8px; text-align: center; position: relative; overflow: hidden; }
+@property --frame-angle {
     syntax: '<angle>';
     inherits: false;
     initial-value: 0deg;
@@ -162,6 +151,17 @@
   .hero p { color: var(--muted); max-width: 46ch; margin: 0 auto; font-size: 0.92rem; }
 
   .hero-stats { display: flex; justify-content: center; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+
+  .link-row { display: flex; justify-content: center; margin-top: 26px; }
+  .link-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Press Start 2P', monospace; font-size: 0.55rem;
+    color: var(--text); background: var(--panel);
+    border: 3px solid var(--line); padding: 10px 16px;
+    text-decoration: none; box-shadow: 4px 4px 0 0 #000;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  }
+  .link-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 #000; background: var(--panel-light); }
   .stat-box {
     background: rgba(0,0,0,0.5);
     border: 3px solid var(--gold-dark);
@@ -181,9 +181,7 @@
     50% { text-shadow: 0 0 16px currentColor, 0 0 4px #fff; }
   }
   .stat-box .lbl { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--muted); margin-top: 6px; letter-spacing: 0.05em; }
-
-  /* ===================== SECTION LABELS ===================== */
-  .section-label { display: flex; align-items: center; gap: 12px; margin: 56px 0 24px; }
+.section-label { display: flex; align-items: center; gap: 12px; margin: 56px 0 24px; }
   .section-label .diamond {
     width: 9px; height: 9px;
     background: var(--gold);
@@ -205,9 +203,7 @@
     animation: rule-travel 3.6s linear infinite;
   }
   @keyframes rule-travel { 0% { left: 0%; transform: translateY(-50%); } 100% { left: calc(100% - 6px); transform: translateY(-50%); } }
-
-  /* ===================== GOAL TRACKER ===================== */
-  .tracker { background: var(--panel); border: 3px solid var(--line); box-shadow: 5px 5px 0 0 #000; padding: 24px 26px; position: relative; overflow: hidden; }
+.tracker { background: var(--panel); border: 3px solid var(--line); box-shadow: 5px 5px 0 0 #000; padding: 24px 26px; position: relative; overflow: hidden; }
   .tracker-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
   .tracker-top .raised { font-family: 'VT323', monospace; font-size: 2.6rem; color: var(--green); line-height: 1; }
   .tracker-top .raised span { color: var(--muted); font-size: 1.4rem; }
@@ -247,9 +243,7 @@
   .tracker-note { margin-top: 6px; font-size: 0.68rem; color: var(--muted); opacity: 0.75; font-style: italic; }
   .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px 1px var(--green); animation: dot-blink 1.1s steps(2) infinite; }
   @keyframes dot-blink { 50% { opacity: 0.2; } }
-
-  /* ===================== TOP DONATORS LEADERBOARD ===================== */
-  .leaderboard { display: flex; flex-direction: column; gap: 12px; }
+.leaderboard { display: flex; flex-direction: column; gap: 12px; }
 
   .don-row {
     background: var(--panel);
@@ -280,9 +274,7 @@
     border-radius: 50%;
     font-weight: 700;
   }
-
-  /* top-3 get a bigger row, a tinted glow wash, a shimmer sweep, and a bigger badge */
-  .don-row.rank-1, .don-row.rank-2, .don-row.rank-3 { padding: 18px 22px; }
+.don-row.rank-1, .don-row.rank-2, .don-row.rank-3 { padding: 18px 22px; }
   .don-row.rank-1 .don-rank, .don-row.rank-2 .don-rank, .don-row.rank-3 .don-rank { width: 38px; height: 38px; font-size: 1.4rem; }
 
   .don-row.rank-1::before, .don-row.rank-2::before, .don-row.rank-3::before {
@@ -322,9 +314,7 @@
     box-shadow: 0 0 0 2px var(--medal-bronze), 4px 4px 0 0 #000;
   }
   .don-row.rank-3 .don-rank { background: var(--medal-bronze); }
-
-  /* crown that sits above rank-1's avatar */
-  .don-crown {
+.don-crown {
     position: absolute;
     width: 22px;
     height: 22px;
@@ -374,9 +364,7 @@
   .don-row.rank-2 .don-amt, .don-row.rank-3 .don-amt { font-size: 1.8rem; }
   .don-amt span { font-size: 0.9rem; color: var(--muted); }
   .empty-state { color: var(--muted); font-size: 0.85rem; text-align: center; padding: 20px; }
-
-  /* ===================== ITEM SHOP GRID ===================== */
-  .shop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.shop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 
   .card {
     background: var(--panel);
@@ -439,9 +427,7 @@
   .card .amt-lbl { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
   .card .buy { margin-top: auto; padding-top: 16px; font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--green); display: flex; align-items: center; gap: 6px; }
   .card .buy svg { width: 12px; height: 12px; }
-
-  /* ===================== PREMIUM / PROFILE DONATE NOTE ===================== */
-  @keyframes profile-glow {
+@keyframes profile-glow {
     0%, 100% { box-shadow: 0 0 0 2px var(--gold-dark), 0 0 14px 0 rgba(244,185,66,0.3), 5px 5px 0 0 #000; }
     50% { box-shadow: 0 0 0 2px var(--gold-dark), 0 0 28px 3px rgba(244,185,66,0.55), 5px 5px 0 0 #000; }
   }
@@ -497,9 +483,7 @@
 <div id="scanlines"></div>
 
 <div class="wrap">
-
-  <!-- HERO -->
-  <div class="hero pixel">
+<div class="hero pixel">
     <div class="marquee">★ SUPPORT ME ★</div>
     <h1>SPVCTA</h1>
     <p>Pick and purchase a gamepass, big or small, to support my cause. Any amount donated is very appreciated!</p>
@@ -513,10 +497,11 @@
         <div class="lbl">TO ME</div>
       </div>
     </div>
+    <div class="link-row">
+      <a class="link-btn" href="/">← Back to spvcta</a>
+    </div>
   </div>
-
-  <!-- GOAL TRACKER: numbers come from donations.json, refreshed every few minutes -->
-  <div class="section-label">
+<div class="section-label">
     <span class="diamond"></span>
     <span class="tag">GOAL TRACKER</span>
     <div class="rule"><span class="rule-dot"></span></div>
@@ -537,9 +522,7 @@
     <div class="tracker-updated"><span class="live-dot"></span> <span id="tracker-updated-text">loading…</span></div>
     <div class="tracker-note">total = gamepass sales + my current & pending Robux — leaderboard also credits direct Robux transfers</div>
   </div>
-
-  <!-- ITEM SHOP: each card links straight to the matching Roblox gamepass -->
-  <div class="section-label">
+<div class="section-label">
     <span class="diamond"></span>
     <span class="tag">ITEM SHOP</span>
     <div class="rule"><span class="rule-dot"></span></div>
@@ -628,9 +611,7 @@
     </a>
 
   </div>
-
-  <!-- TOP DONATORS: rank 1-3 get a tiered gold/silver/bronze treatment, crown on #1 -->
-  <div class="section-label">
+<div class="section-label">
     <span class="diamond"></span>
     <span class="tag">TOP DONATORS</span>
     <div class="rule"><span class="rule-dot"></span></div>
@@ -650,13 +631,11 @@
 
   <footer>
     All purchases are handled directly through Roblox. This page does not process or store payments.
-    <br><a href="/">← back to TheSpecialNone</a>
   </footer>
 
 </div>
 
 <script>
-  // live data: tracker + leaderboard, from donations.json
   const DATA_URL = "./donations.json";
   const REFRESH_MS = 5 * 60 * 1000;
 
@@ -746,7 +725,6 @@
   loadData();
   setInterval(loadData, REFRESH_MS);
 
-  // background sparks
   function spawnParticles() {
     const field = document.getElementById("particles");
     const count = 26;
@@ -767,7 +745,6 @@
   }
   spawnParticles();
 
-  // shop card cursor tilt
   function initCardTilt() {
     document.querySelectorAll(".shop .card").forEach(card => {
       card.addEventListener("mousemove", e => {
