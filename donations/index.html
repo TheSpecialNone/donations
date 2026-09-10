@@ -17,6 +17,22 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: zoom-out 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+::view-transition-new(root) {
+  animation: zoom-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+@keyframes zoom-out {
+  to { transform: scale(1.06); opacity: 0; }
+}
+@keyframes zoom-in {
+  from { transform: scale(0.94); opacity: 0; }
+}
+
 body {
   background: var(--bg);
   color: var(--fg);
@@ -111,9 +127,9 @@ section { padding: 50px 0; border-top: 1px solid var(--line); position: relative
 
 .tracker-figure {
   font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
-  font-size: clamp(3.4rem, 12vw, 6.5rem); line-height: 1; color: var(--accent);
+  font-size: clamp(3.4rem, 12vw, 6.5rem); line-height: 1.15; color: var(--accent);
 }
-.tracker-goal { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--muted); margin-top: 8px; }
+.tracker-goal { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--muted); margin-top: 18px; }
 .tracker-goal span { color: var(--fg); }
 .tracker-bar { margin-top: 24px; height: 2px; background: var(--line); position: relative; }
 .tracker-bar-fill { position: absolute; top: 0; left: 0; height: 2px; background: var(--accent); transition: width 0.6s ease; }
@@ -171,7 +187,8 @@ footer { padding: 40px 0 60px; font-family: 'Space Mono', monospace; font-size: 
 <header>
   <a class="wordmark" href="/">spvcta<span class="dot">.</span></a>
   <nav>
-    <a href="/">index</a>
+    <a href="https://x.com/TheSpecialNone" target="_blank" rel="noopener">X</a>
+    <a href="https://github.com/TheSpecialNone" target="_blank" rel="noopener">github</a>
     <a href="https://www.roblox.com/users/902603595/profile" target="_blank" rel="noopener">roblox</a>
   </nav>
 </header>
