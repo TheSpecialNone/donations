@@ -1,11 +1,11 @@
 {
-  "totalRaised": 9549,
+  "totalRaised": 9461,
   "salesTotal": 1516,
-  "accountBalance": 8033,
-  "availableRobux": 6795,
-  "pendingRobux": 1238,
+  "accountBalance": 7945,
+  "availableRobux": 6705,
+  "pendingRobux": 1240,
   "goal": 24800,
-  "lastUpdated": "2026-09-12T00:19:51.933Z",
+  "lastUpdated": "2026-09-12T00:37:24.602Z",
   "topDonators": [
     {
       "name": "C0MPP",
@@ -33,7 +33,7 @@
       "displayName": "Dbblo",
       "amount": 203,
       "userId": 172304387,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-2F53977348E8360965CCCD71AA842531-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": null
     },
     {
       "name": "tsuchikxge",
