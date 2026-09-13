@@ -1,18 +1,18 @@
 {
-  "totalRaised": 9596,
+  "totalRaised": 9875,
   "salesTotal": 1516,
-  "accountBalance": 8080,
-  "availableRobux": 7054,
-  "pendingRobux": 1026,
+  "accountBalance": 8359,
+  "availableRobux": 7263,
+  "pendingRobux": 1096,
   "goal": 24800,
-  "lastUpdated": "2026-09-12T19:07:03.750Z",
+  "lastUpdated": "2026-09-13T14:21:47.569Z",
   "topDonators": [
     {
       "name": "C0MPP",
       "displayName": "comp",
       "amount": 600,
       "userId": 1754200936,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-45462274DDF160282C72146422A5AC41-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-528074D522284EBBAE22180D865B597B-Png/150/150/AvatarHeadshot/Png/isCircular"
     },
     {
       "name": "pyt3e",
@@ -54,14 +54,14 @@
       "displayName": "alex",
       "amount": 175,
       "userId": 1233558151,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-4AADC6AA6068346652798D7B449B24EA-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-DDD0F4A983C5E911256C604618FFC1BA-Png/150/150/AvatarHeadshot/Png/isCircular"
     },
     {
       "name": "traviscott4209",
       "displayName": "travis",
       "amount": 35,
       "userId": 3205399634,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-AD1D25DA49C72CF5C57C6126BE806DD2-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-5840BF2A8A7BBF6B2E345114A0367DE6-Png/150/150/AvatarHeadshot/Png/isCircular"
     },
     {
       "name": "P1xnet",
@@ -75,7 +75,7 @@
       "displayName": "Bachira",
       "amount": 3,
       "userId": 1720580134,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-309674E0D9AB07D8DFB95EB43667D46D-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-C68D9A3113F464D739BACB30C4A50965-Png/150/150/AvatarHeadshot/Png/isCircular"
     },
     {
       "name": "py0ne",
