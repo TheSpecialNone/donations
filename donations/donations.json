@@ -1,18 +1,18 @@
 {
-  "totalRaised": 11697,
+  "totalRaised": 11823,
   "salesTotal": 1516,
-  "accountBalance": 10181,
+  "accountBalance": 10307,
   "availableRobux": 9160,
-  "pendingRobux": 1021,
+  "pendingRobux": 1147,
   "goal": 24800,
-  "lastUpdated": "2026-09-15T18:58:25.155Z",
+  "lastUpdated": "2026-09-15T21:56:38.530Z",
   "topDonators": [
     {
       "name": "C0MPP",
       "displayName": "comp",
       "amount": 600,
       "userId": 1754200936,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-9F1E2B41046664111EA0F5050B5AFEA4-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-C9FC5131E3B1820C6DA70095E2F43656-Png/150/150/AvatarHeadshot/Png/isCircular"
     },
     {
       "name": "pyt3e",
@@ -89,7 +89,7 @@
       "displayName": "Bachira",
       "amount": 3,
       "userId": 1720580134,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-7C5EB8C9F5B3DC43CA9BD28BC2EDD06C-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-309674E0D9AB07D8DFB95EB43667D46D-Png/150/150/AvatarHeadshot/Png/isCircular"
     },
     {
       "name": "py0ne",
@@ -103,7 +103,7 @@
       "displayName": "tezikon",
       "amount": 3,
       "userId": 2218857424,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-26D1B3A1C8ABBBE88DC85432D230E326-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-AF87804F93BD6F93F465750A2451A1C3-Png/150/150/AvatarHeadshot/Png/isCircular"
     }
   ]
 }
