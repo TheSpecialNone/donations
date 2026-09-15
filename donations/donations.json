@@ -2,10 +2,10 @@
   "totalRaised": 11823,
   "salesTotal": 1516,
   "accountBalance": 10307,
-  "availableRobux": 9160,
-  "pendingRobux": 1147,
+  "availableRobux": 9244,
+  "pendingRobux": 1063,
   "goal": 24800,
-  "lastUpdated": "2026-09-15T21:56:38.530Z",
+  "lastUpdated": "2026-09-15T23:56:07.316Z",
   "topDonators": [
     {
       "name": "C0MPP",
@@ -103,7 +103,7 @@
       "displayName": "tezikon",
       "amount": 3,
       "userId": 2218857424,
-      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-AF87804F93BD6F93F465750A2451A1C3-Png/150/150/AvatarHeadshot/Png/isCircular"
+      "avatarUrl": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-CA29BA95F93671396EB97EBEA3CFCBD1-Png/150/150/AvatarHeadshot/Png/isCircular"
     }
   ]
 }
